@@ -11,14 +11,14 @@ logger = logging.getLogger(__name__)
 
 
 class Chart:
-    rows = []
 
     def __init__(self):
-        self.rows = []
+        self.data = {}
 
     class Row:
-        def __init__(self, site, min_val, max_val):
+        def __init__(self, site):
             self.date: List[str] = []
+            self.daily_avg: List[str] = []
             self.site = site
 
     class HarvestArea:
@@ -59,10 +59,6 @@ class Chart:
 
         start, end = utils.two_weeks()
 
-        site_names = [ha.name for ha in harvest_area_variables.harvest_areas]
-        index = 0
-        init = True
-
         for ha in harvest_area_variables.as_array():
             resampled = ubidotsdata.Resample(
                 variables=ha.variables,
@@ -80,12 +76,20 @@ class Chart:
             daily_avg = []
             
             for day in resampled.results:
-                if init:
-                    ts = day[0]
-                    if ts is None:
-                        continue
+                ts = round(day[0])/1000
+                if ts is None:
+                    continue
+                if ts < 0 or ts > 9999999999:
+                    logging.error(f"Invalid timestamp: {ts}")
+                    continue
+                try:
                     fmt_time = datetime.fromtimestamp(ts).strftime("%d/%m/%Y %H:%M")
-                    #chart.date.append(fmt_time)
+                except ValueError as e:
+                    logging.error(f"Error formatting timestamp: {e}")
+                    continue
+
+                if fmt_time not in chart.data:
+                    chart.data[fmt_time] = {}
 
                 sum = 0.0
                 n = 0.0
@@ -95,37 +99,19 @@ class Chart:
                     if 0.0 < value < 40.0:
                         sum += value
                         n += 1.0
-                daily_avg.append(sum / n)
-
-            init = False
-
-            #if site_names[index] == "Moonlight":
-            #    chart.moonlight = daily_avg
-            #elif site_names[index] == "Rocky Point":
-            #    chart.rocky_point = daily_avg
-            #elif site_names[index] == "Waterfall":
-            #    chart.waterfall = daily_avg
-            #else:
-            #    logging.error("Unknown harvest area found. Append this harvest area before re-running.")
-
-            index += 1
+                if n > 0:
+                    chart.data[fmt_time][ha.name] = sum / n
 
         return chart
 
-    def to_csv(self, variable_name: str):
-        filename = f"data/fortnightly-{variable_name}-chart.csv"
+    def to_csv(self, filename: str):
+        with open(filename, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            for date, values in self.data.items():
+                row = [date]
+                for harvest_area, value in values.items():
+                    row.append(str(value))
+                writer.writerow(row)
 
-        with open(filename, 'a', newline='') as csvfile:
-            writer = csv.writer(csvfile)
 
-            for day in self.as_array():
-                writer.writerow(day)
-
-    def as_array(self) -> List[List[str]]:
-        transposed = []
-        for date, ml, rp, wf in zip(self.date, self.moonlight, self.rocky_point, self.waterfall):
-            day = [date, str(ml), str(rp), str(wf)]
-            transposed.append(day)
-
-        return transposed
     

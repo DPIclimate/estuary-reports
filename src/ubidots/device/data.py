@@ -59,7 +59,6 @@ class Resample:
             response = requests.post(url, headers=headers, data=json.dumps(self.__dict__))
             response.raise_for_status()
             json_res = response.json()
-            print(f"\nJSON RESPONSE: {json_res}\n")
             return ResampleResult(**json_res)
         except Exception as e:
             logger.error(f"Error requesting resampled data: {e}")

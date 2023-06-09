@@ -113,7 +113,9 @@ def main():
             weekly_table.to_csv(variable, f"{site_directory}/weekly-{variable}-table.csv")
 
             fortnightly_chart = fortnightlychart.Chart().new(variable_list, site, token)
-            #fortnightly_chart.to_csv(variable)
+            fortnightly_chart.to_csv(f"{site_directory}/fortnightly-{variable}-chart.csv")
+
+            # Create fortnightly dataset for discharge rate WaterNSW.
 
     print("Complete.")
 
