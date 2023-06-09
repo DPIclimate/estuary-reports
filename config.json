@@ -1,0 +1,303 @@
+{
+    "sites": [
+        {   
+            "directory": "clyde",
+            "name": "Clyde River",
+            "devices": [
+                {
+                    "name": "Buoy 01 - Wray Street",
+                    "location": "Wray Street",
+                    "harvest_area": "Moonlight",
+                    "buoy_number": "1"
+                },
+                {
+                    "name": "Buoy 03 - Moonlight",
+                    "location": "Moonlight",
+                    "harvest_area": "Moonlight",
+                    "buoy_number": "3"
+                },
+                {
+                    "name": "Buoy 04 - Budd Isl. North",
+                    "location": "Budd Island North",
+                    "harvest_area": "Moonlight",
+                    "buoy_number": "4"
+                },
+                {
+                    "name": "Buoy 05 - Snapper Pt. NW",
+                    "location": "Snapper Point",
+                    "harvest_area": "Moonlight",
+                    "buoy_number": "5"
+                },
+                {
+                    "name": "Fixed depth - Rocky Pt.",
+                    "location": "Rocky Point",
+                    "harvest_area": "Rocky Point",
+                    "buoy_number": "Fixed"
+                },
+                {
+                    "name": "Buoy 08 - Angry Man Pt.",
+                    "location": "Angry Man Point",
+                    "harvest_area": "Rocky Point",
+                    "buoy_number": "8"
+                },
+                {
+                    "name": "Buoy 09 - Chinaman's Point",
+                    "location": "Chinamans Point",
+                    "harvest_area": "Rocky Point",
+                    "buoy_number": "9"
+                },
+                {
+                    "name": "Buoy 10 - Waterfall Creek",
+                    "location": "Waterfall Creek",
+                    "harvest_area": "Rocky Point",
+                    "buoy_number": "10"
+                },
+                {
+                    "name": "Buoy 11 - Opp. Buckenbowra",
+                    "location": "Buckenbowra Creek",
+                    "harvest_area": "Waterfall",
+                    "buoy_number": "11"
+                },
+                {
+                    "name": "Buoy 12 - Big Island West",
+                    "location": "Big Island West",
+                    "harvest_area": "Waterfall",
+                    "buoy_number": "12"
+                },
+                {
+                    "name": "Buoy 13 - Double Bay",
+                    "location": "Double Bay",
+                    "harvest_area": "Waterfall",
+                    "buoy_number": "13"
+                }
+            ],
+            "variables": [
+                "salinity", 
+                "temperature"
+            ],
+            "harvest_areas": [
+                "Moonlight",
+                "Rocky Point",
+                "Waterfall"
+            ],
+            "files": [
+                {
+                    "filepath": "combined-precipitation.csv",
+                    "name": "yearly-precipitation",
+                    "chart_id": "6W882",
+                    "dynamic": false,
+                    "columns": [
+                        "2020",
+                        "2021",
+                        "2022",
+                        "date",
+                        "2023"
+                    ]
+                },
+                {
+                    "filepath": "combined-dischargerate.csv",
+                    "name": "combined-dischargerate",
+                    "chart_id": "4sWJe",
+                    "dynamic": false,
+                    "columns": [
+                        "2022",
+                        "2021",
+                        "2020",
+                        "2019",
+                        "2018",
+                        "Date"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature.csv",
+                    "name": "fortnightly-temperature",
+                    "chart_id": "FRGYL",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity.csv",
+                    "name": "fortnightly-salinity",
+                    "chart_id": "9bX8b",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-precipitation.csv",
+                    "name": "weekly-precipitation",
+                    "chart_id": "JCtlb",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "precipitation"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-table.csv",
+                    "name": "weekly-salinity-table",
+                    "chart_id": "Kf811",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity-chart.csv",
+                    "name": "fortnightly-salinity-chart",
+                    "chart_id": "udOPz",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Moonlight",
+                        "Rocky Point",
+                        "Waterfall"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature-chart.csv",
+                    "name": "fortnightly-temperature-chart",
+                    "chart_id": "3BIUb",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Moonlight",
+                        "Rocky Point",
+                        "Waterfall"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-table.csv",
+                    "name": "weekly-temperature-table",
+                    "chart_id": "73fCc",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-brooman.csv",
+                    "name": "fortnightly-brooman",
+                    "chart_id": "Gkj6A",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-buckenbowra.csv",
+                    "name": "fortnightly-buckenbowra",
+                    "chart_id": "PVEkU",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-brooman.csv",
+                    "name": "yearly-brooman",
+                    "chart_id": "JU4XG",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-buckenbowra.csv",
+                    "name": "yearly-buckenbowra",
+                    "chart_id": "FvJqp",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-extremes.csv",
+                    "name": "weekly-salinity-extremes",
+                    "chart_id": "eEJLQ",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-extremes.csv",
+                    "name": "weekly-temperature-extremes",
+                    "chart_id": "TQXEq",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "combined-historical-temperature-mean.csv",
+                    "name": "combined-historical-temperature-mean",
+                    "chart_id": "P4JnS",
+                    "dynamic": true,
+                    "columns": []
+                },
+                {
+                    "filepath": "combined-historical-temperature-min.csv",
+                    "name": "combined-historical-temperature-min",
+                    "chart_id": "wEbn0",
+                    "dynamic": true,
+                    "columns": []
+                },
+                {
+                    "filepath": "combined-historical-temperature-max.csv",
+                    "name": "combined-historical-temperature-max",
+                    "chart_id": "yKBPg",
+                    "dynamic": true,
+                    "columns": []
+                }
+            ],
+            "water_nsw": {
+                "sites": [
+                    {
+                        "name": "brooman",
+                        "id": 216002
+                    },
+                    {
+                        "name": "buckenbowra",
+                        "id": 216009
+                    }
+                ], 
+                "defaults": {
+                    "params": {
+                        "varfrom": 100.00,
+                        "interval": "day",
+                        "varto": 141.00,
+                        "datasource": "CP",
+                        "data_type": "mean",
+                        "multiplier": 1
+                    },
+                    "function": "get_ts_traces",
+                    "version": 2
+                }
+            }
+        }
+    ]
+}
