@@ -71,6 +71,9 @@
                     "buoy_number": "13"
                 }
             ],
+            "ubidots_aws_variable_ids": [
+                "61f74ccff6e837004e0691f4"
+            ],
             "variables": [
                 "salinity", 
                 "temperature"
@@ -79,6 +82,10 @@
                 "Moonlight",
                 "Rocky Point",
                 "Waterfall"
+            ],
+            "water_temperature_variables": [
+                "616e4a88810cbd039c60af03",
+                "616e476e41ac9d03d99b67ed"
             ],
             "files": [
                 {
