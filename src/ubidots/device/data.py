@@ -22,6 +22,9 @@ class Aggregation:
             "Content-Type": "application/json"
         }
         try:
+            #print(f"URL: {url}")
+            #print(f"Headers: {headers}")
+            #print(f"Data: {json.dumps(self.__dict__)}")
             response = requests.post(url, headers=headers, data=json.dumps(self.__dict__))
             response.raise_for_status()
             json_res = response.json()

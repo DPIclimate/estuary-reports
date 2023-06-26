@@ -21,34 +21,32 @@ def next_10_days() -> Tuple[int, int]:
     end = start + datetime.timedelta(days=10)
     return (int(start.timestamp()) * 1000, int(end.timestamp()) * 1000)
 
-def this_year(millis: bool) -> Tuple[int, int]:
+def this_year() -> Tuple[int, int]:
     utc_time_now = datetime.datetime.now(datetime.timezone.utc)
-    ts_now = int(utc_time_now.timestamp())
+    ts_now = int(utc_time_now.timestamp() * 1000)
     local_time_now = utc_time_now.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
     start_of_year = datetime.datetime(local_time_now.year, 1, 1, tzinfo=datetime.timezone(datetime.timedelta(hours=10)))
-    start_of_year_ts = int(start_of_year.timestamp())
-    if not millis:
-        return (start_of_year_ts, ts_now)
-    return (start_of_year_ts * 1000, ts_now * 1000)
+    start_of_year_ts = int(start_of_year.timestamp() * 1000)
+    return (start_of_year_ts, ts_now)
 
 def one_week() -> Tuple[int, int]:
     time_now = datetime.datetime.now(datetime.timezone.utc)
     local_time_now = time_now.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
     midnight_today = datetime.datetime.combine(local_time_now.date(), datetime.time.min, datetime.timezone(datetime.timedelta(hours=10)))
     last_week = midnight_today - datetime.timedelta(days=7)
-    return (int(last_week.timestamp()) * 1000, int(time_now.timestamp()) * 1000)
+    return (int(last_week.timestamp() * 1000), int(time_now.timestamp() * 1000))
 
 def two_weeks() -> Tuple[int, int]:
     time_now = datetime.datetime.now(datetime.timezone.utc)
     local_time_now = time_now.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
     midnight_today = datetime.datetime.combine(local_time_now.date(), datetime.time.min, datetime.timezone(datetime.timedelta(hours=10)))
     last_two_weeks = midnight_today - datetime.timedelta(days=14)
-    return (int(last_two_weeks.timestamp()), int(time_now.timestamp()))
+    return (int(last_two_weeks.timestamp()*1000), int(time_now.timestamp()*1000))
 
 def last_week() -> Tuple[int, int]:
     last_week_end = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) * 1000 - 604800000
     last_week_start = last_week_end - 604800000
-    return (last_week_start, last_week_end)
+    return (int(last_week_start), int(last_week_end))
 
 def weekly_column_names() -> List[str]:
     last_week, _now = one_week()
@@ -72,12 +70,14 @@ class Config:
     """
     Configuration from `config.json`.
     """
-    def __init__(self, directory: str, name: str, devices: List[dict], variables: List[str], harvest_areas: str, files: List[dict], water_nsw: dict):
+    def __init__(self, directory: str, name: str, devices: List[dict], ubidots_aws_variable_ids: List[str], variables: List[str], harvest_areas: str, water_temperature_variables: List[str], files: List[dict], water_nsw: dict):
         self.directory = directory
         self.name = name
         self.devices = [Device(**device) for device in devices]
+        self.ubidots_aws_variable_ids = ubidots_aws_variable_ids
         self.variables = variables
         self.harvest_areas = harvest_areas
+        self.water_temperature_variables = water_temperature_variables
         self.files = [FileConfig(**file) for file in files]
         self.water_nsw = WaterNsw(**water_nsw)
 

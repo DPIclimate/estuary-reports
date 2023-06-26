@@ -65,8 +65,8 @@ class Chart:
                 aggregation="mean",
                 join_dataframes=True,
                 period="24H",
-                start=start * 1000,
-                end=end * 1000,
+                start=start,
+                end=end,
             ).resample(token)
 
             if resampled is None:

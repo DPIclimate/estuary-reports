@@ -23,9 +23,10 @@ class RangePlot:
     @classmethod
     def new(cls, variable_list: ubidotsvariables.VariablesList, token: str) -> 'RangePlot':
         # ---- Last Week ---- #
+        start, end = None, None
         start, end = utils.one_week()
 
-        print(f"start: {start}, end: {end}")
+        print(f"Range Plot | Start: {start}, End: {end}")
 
         this_week_agg = ubidotsdata.Aggregation(
             variables=variable_list.ids.copy(),
@@ -35,13 +36,16 @@ class RangePlot:
             end=end,
         )
 
+        print(f"Range Plot | this_week_agg: {this_week_agg.__dict__}")
+
         try:
             this_week = this_week_agg.aggregate(token)
         except Exception as e:
-            logger.error(f"Error requesting weekly mean: {e}")
+            logger.error(f"RangePlot: Error requesting weekly mean for this week: {e}")
             this_week = None
 
         # ---- This Week ---- #
+        start, end = None, None
         start, end = utils.last_week()
 
         last_week_agg = ubidotsdata.Aggregation(
@@ -55,11 +59,12 @@ class RangePlot:
         try:
             last_week = last_week_agg.aggregate(token)
         except Exception as e:
-            logger.error(f"Error requesting weekly mean: {e}")
+            logger.error(f"RangePlot: Error requesting weekly mean for last week: {e}")
             last_week = None
 
         range_plot = RangePlot([])
 
+        # Below won't print if objects aren't initiated. Leaving in for development to indicate objects didn't get created (most likely API call failure).
         print(f"last_week: {last_week.__dict__}, this_week: {this_week.__dict__}")
 
         if last_week is not None and this_week is not None:

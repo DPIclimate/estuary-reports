@@ -8,8 +8,12 @@ import data.extremes as dataextremes
 import weekly.table as weeklydatatable
 import fortnightly.chart as fortnightlychart
 import fortnightly.rangeplot as rangeplot
+import waternsw.flow as waternswflow
+import weekly.bar as weeklybar
+import ubidots.device.aws as ubidotsaws
+import data.yearly as yearlydata
 from dotenv import load_dotenv
-import util as util
+import util as utils
 import pprint
 
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +23,6 @@ overwrite_csvs = True
 def main():
     load_dotenv()
     #token = os.getenv('ORG_KEY')
-    aws_token = os.getenv('AWS_ORG_KEY')
     dw_key = os.getenv('DW_KEY')
     clyde_key = os.getenv('CLYDE_ORG_KEY')
     use_cache = False
@@ -36,15 +39,21 @@ def main():
 
     # For all sites in config, create folder for each using directory
     for site in config['sites']:
-        site_config = util.Config.from_site(site)
+        site_config = utils.Config.from_site(site)
 
         print(site_config)
 
         token = ""
+        aws_token = ""
         if site['name'].__contains__('Clyde River'):
             token = clyde_key
+            aws_token = os.getenv('CLYDE_AWS_ORG_KEY')
         elif site['name'] == 'Wallace Lakes':
             token = clyde_key
+            aws_token = ""
+        elif site['name'] == 'Manning River':
+            token = ""
+            aws_token = ""
         else:
             token = clyde_key
         
@@ -73,9 +82,9 @@ def main():
                 with open(file_path, 'w') as f:
                     if file['columns'] == None:
                         writer = csv.writer(f)
-                        writer.writerow(util.weekly_column_names())
+                        writer.writerow(utils.weekly_column_names())
                     else:
-                        columns = util.weekly_column_names()
+                        columns = utils.weekly_column_names()
                         for column in file['columns']:
                             columns.append(column)
                         writer = csv.writer(f)
@@ -86,6 +95,8 @@ def main():
                     writer = csv.writer(f)
                     writer.writerow(file['columns'])
         
+
+        # For each sites variables, create csv files.
         for variable in site['variables']:
             logging.info(f"Processing {variable} variable.")
             if use_cache:
@@ -115,7 +126,33 @@ def main():
             fortnightly_chart = fortnightlychart.Chart().new(variable_list, site, token)
             fortnightly_chart.to_csv(f"{site_directory}/fortnightly-{variable}-chart.csv")
 
-            # Create fortnightly dataset for discharge rate WaterNSW.
+
+        # For each site, create datasets required using 'site' variable.
+
+        # Create fortnightly dataset for discharge rate WaterNSW.
+        fortnight_start, fortnight_end = utils.two_weeks()
+        print(f"Fortnight Date Range | Start: {int(fortnight_start/1000)}, End: {int(fortnight_end/1000)}")
+        waternswflow.DischargeRate(error_num=None, return_field=None).generate("fortnightly", site_directory, site["water_nsw"])
+    
+        # Create year dataset for discharge rate WaterNSW.
+        year_start, year_end = utils.this_year()
+        print(f"Year Date Range | Start: {year_start}, End: {year_end}")
+        waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
+        
+        #### Join discharge datasets, will need to update to use a site variable for second file.
+        yearlydata.join_flow_datasets(site_directory, files=["historical-dischargerate.csv", "yearly-brooman.csv"])
+
+        # Create weekly dataset for precipitation bar chart. Using Variable ID for aggregate data for total daily rainfall values.
+        weeklybar.weekly_precipitation_to_csv(site_directory, aws_token, site['ubidots_aws_variable_ids'])
+
+        # Create year to date precipitation datasets.
+        yearlydata.year_to_date_precipitation_to_csv(site_directory, aws_token, site['ubidots_aws_variable_ids'])
+        yearlydata.join_precipitation_datasets(site_directory)
+
+        # Create year to date and historical water temperature datasets.
+        yearlydata.year_to_date_temperature_to_csv(site_directory, token, site['water_temperature_variables'])
+        yearlydata.historical_temperature_datasets(site_directory)
+
 
     print("Complete.")
 
