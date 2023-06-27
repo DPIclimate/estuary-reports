@@ -91,7 +91,7 @@
                 {
                     "filepath": "combined-precipitation.csv",
                     "name": "yearly-precipitation",
-                    "chart_id": "6W882",
+                    "chart_id": "eg4Ri",
                     "dynamic": false,
                     "columns": [
                         "2020",
@@ -104,7 +104,7 @@
                 {
                     "filepath": "combined-dischargerate.csv",
                     "name": "combined-dischargerate",
-                    "chart_id": "4sWJe",
+                    "chart_id": "zR66q",
                     "dynamic": false,
                     "columns": [
                         "2022",
@@ -118,7 +118,7 @@
                 {
                     "filepath": "fortnightly-temperature.csv",
                     "name": "fortnightly-temperature",
-                    "chart_id": "FRGYL",
+                    "chart_id": "3EDKz",
                     "dynamic": false,
                     "columns": [
                         "Location",
@@ -130,7 +130,7 @@
                 {
                     "filepath": "fortnightly-salinity.csv",
                     "name": "fortnightly-salinity",
-                    "chart_id": "9bX8b",
+                    "chart_id": "e1vQ4",
                     "dynamic": false,
                     "columns": [
                         "Location",
@@ -142,7 +142,7 @@
                 {
                     "filepath": "weekly-precipitation.csv",
                     "name": "weekly-precipitation",
-                    "chart_id": "JCtlb",
+                    "chart_id": "Skn0T",
                     "dynamic": false,
                     "columns": [
                         "date",
@@ -152,7 +152,7 @@
                 {
                     "filepath": "weekly-salinity-table.csv",
                     "name": "weekly-salinity-table",
-                    "chart_id": "Kf811",
+                    "chart_id": "9FvBg",
                     "dynamic": true,
                     "columns": [
                         "Location",
@@ -162,7 +162,7 @@
                 {
                     "filepath": "fortnightly-salinity-chart.csv",
                     "name": "fortnightly-salinity-chart",
-                    "chart_id": "udOPz",
+                    "chart_id": "h9DBl",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -174,7 +174,7 @@
                 {
                     "filepath": "fortnightly-temperature-chart.csv",
                     "name": "fortnightly-temperature-chart",
-                    "chart_id": "3BIUb",
+                    "chart_id": "UECZz",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -186,7 +186,7 @@
                 {
                     "filepath": "weekly-temperature-table.csv",
                     "name": "weekly-temperature-table",
-                    "chart_id": "73fCc",
+                    "chart_id": "3EDKz",
                     "dynamic": true,
                     "columns": [
                         "Location",
@@ -196,7 +196,7 @@
                 {
                     "filepath": "fortnightly-brooman.csv",
                     "name": "fortnightly-brooman",
-                    "chart_id": "Gkj6A",
+                    "chart_id": "tHiyN",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -207,7 +207,7 @@
                 {
                     "filepath": "fortnightly-buckenbowra.csv",
                     "name": "fortnightly-buckenbowra",
-                    "chart_id": "PVEkU",
+                    "chart_id": "F1Uie",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -218,7 +218,7 @@
                 {
                     "filepath": "yearly-brooman.csv",
                     "name": "yearly-brooman",
-                    "chart_id": "JU4XG",
+                    "chart_id": "m5CdX",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -229,7 +229,7 @@
                 {
                     "filepath": "yearly-buckenbowra.csv",
                     "name": "yearly-buckenbowra",
-                    "chart_id": "FvJqp",
+                    "chart_id": "Cch5L",
                     "dynamic": false,
                     "columns": [
                         "Date",
@@ -240,7 +240,7 @@
                 {
                     "filepath": "weekly-salinity-extremes.csv",
                     "name": "weekly-salinity-extremes",
-                    "chart_id": "eEJLQ",
+                    "chart_id": "D0Dgr",
                     "dynamic": false,
                     "columns": [
                         "Site",
@@ -251,7 +251,7 @@
                 {
                     "filepath": "weekly-temperature-extremes.csv",
                     "name": "weekly-temperature-extremes",
-                    "chart_id": "TQXEq",
+                    "chart_id": "Zp6xO",
                     "dynamic": false,
                     "columns": [
                         "Site",
@@ -262,21 +262,21 @@
                 {
                     "filepath": "combined-historical-temperature-mean.csv",
                     "name": "combined-historical-temperature-mean",
-                    "chart_id": "P4JnS",
+                    "chart_id": "v7tbl",
                     "dynamic": true,
                     "columns": []
                 },
                 {
                     "filepath": "combined-historical-temperature-min.csv",
                     "name": "combined-historical-temperature-min",
-                    "chart_id": "wEbn0",
+                    "chart_id": "DdrLx",
                     "dynamic": true,
                     "columns": []
                 },
                 {
                     "filepath": "combined-historical-temperature-max.csv",
                     "name": "combined-historical-temperature-max",
-                    "chart_id": "yKBPg",
+                    "chart_id": "5frJO",
                     "dynamic": true,
                     "columns": []
                 }

@@ -12,6 +12,8 @@ import waternsw.flow as waternswflow
 import weekly.bar as weeklybar
 import ubidots.device.aws as ubidotsaws
 import data.yearly as yearlydata
+import datawrapper.export as datawrapperexport
+import datawrapper.download as datawrapperdownload
 from dotenv import load_dotenv
 import util as utils
 import pprint
@@ -94,7 +96,6 @@ def main():
                 with open(file_path, 'w') as f:
                     writer = csv.writer(f)
                     writer.writerow(file['columns'])
-        
 
         # For each sites variables, create csv files.
         for variable in site['variables']:
@@ -126,7 +127,6 @@ def main():
             fortnightly_chart = fortnightlychart.Chart().new(variable_list, site, token)
             fortnightly_chart.to_csv(f"{site_directory}/fortnightly-{variable}-chart.csv")
 
-
         # For each site, create datasets required using 'site' variable.
 
         # Create fortnightly dataset for discharge rate WaterNSW.
@@ -153,6 +153,12 @@ def main():
         yearlydata.year_to_date_temperature_to_csv(site_directory, token, site['water_temperature_variables'])
         yearlydata.historical_temperature_datasets(site_directory)
 
+        datawrapperexport.all_files_to_datawrapper(site_directory, site, dw_key)
+
+        # Download chart images from data wrapper for PDF report generation
+        for file in site['files']:
+            filename = f"{site_directory}/imgs/{file['name']}.png"
+            datawrapperdownload.download_image(filename, file['chart_id'], dw_key)
 
     print("Complete.")
 
