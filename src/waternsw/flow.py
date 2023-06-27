@@ -8,7 +8,6 @@ import csv
 import requests
 from typing import List
 from datetime import datetime
-import pprint
 
 logger = logging.basicConfig(level=logging.INFO)
 
@@ -122,7 +121,8 @@ class DischargeRate:
                     writer.writerow([date_str, round(flow,2), trace['q']])
                 elif time_range == "yearly":
                     flow = float(trace['v'])
-                    writer.writerow([date_str, round(flow,2), trace['q']])
+                    sum += flow
+                    writer.writerow([date_str, round(sum,2), trace['q']])
 
     @classmethod
     def generate(cls, time_range: str, site_directory, config):
