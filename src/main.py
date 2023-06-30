@@ -24,9 +24,9 @@ overwrite_csvs = True
 
 def main():
     load_dotenv()
-    #token = os.getenv('ORG_KEY')
     dw_key = os.getenv('DW_KEY')
-    clyde_key = os.getenv('CLYDE_ORG_KEY')
+    clyde_river_key = os.getenv('CLYDE_ORG_KEY')
+    wallace_lakes_key = os.getenv('CLYDE_ORG_KEY')
     use_cache = False
 
     cwd = os.getcwd()
@@ -46,18 +46,14 @@ def main():
         print(site_config)
 
         token = ""
-        aws_token = ""
         if site['name'].__contains__('Clyde River'):
-            token = clyde_key
-            aws_token = os.getenv('CLYDE_AWS_ORG_KEY')
+            token = clyde_river_key
         elif site['name'] == 'Wallace Lakes':
-            token = clyde_key
-            aws_token = ""
+            token = wallace_lakes_key
         elif site['name'] == 'Manning River':
             token = ""
-            aws_token = ""
         else:
-            token = clyde_key
+            token = clyde_river_key
         
         print(f"{site['name']}: {token}")
 
@@ -139,14 +135,14 @@ def main():
         print(f"Year Date Range | Start: {year_start}, End: {year_end}")
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
         
-        #### Join discharge datasets, will need to update to use a site variable for second file.
-        yearlydata.join_flow_datasets(site_directory, files=["historical-dischargerate.csv", "yearly-brooman.csv"])
+        # Join discharge dataset files.
+        yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
 
         # Create weekly dataset for precipitation bar chart. Using Variable ID for aggregate data for total daily rainfall values.
-        weeklybar.weekly_precipitation_to_csv(site_directory, aws_token, site['ubidots_aws_variable_ids'])
+        weeklybar.weekly_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
 
         # Create year to date precipitation datasets.
-        yearlydata.year_to_date_precipitation_to_csv(site_directory, aws_token, site['ubidots_aws_variable_ids'])
+        yearlydata.year_to_date_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
         yearlydata.join_precipitation_datasets(site_directory)
 
         # Create year to date and historical water temperature datasets.

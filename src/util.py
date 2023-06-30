@@ -70,7 +70,7 @@ class Config:
     """
     Configuration from `config.json`.
     """
-    def __init__(self, directory: str, name: str, devices: List[dict], ubidots_aws_variable_ids: List[str], variables: List[str], harvest_areas: str, water_temperature_variables: List[str], files: List[dict], water_nsw: dict):
+    def __init__(self, directory: str, name: str, devices: List[dict], ubidots_aws_variable_ids: List[str], variables: List[str], harvest_areas: str, water_temperature_variables: List[str], historical_discharge_files: List[str], files: List[dict], water_nsw: dict):
         self.directory = directory
         self.name = name
         self.devices = [Device(**device) for device in devices]
@@ -78,6 +78,7 @@ class Config:
         self.variables = variables
         self.harvest_areas = harvest_areas
         self.water_temperature_variables = water_temperature_variables
+        self.historical_discharge_files = historical_discharge_files
         self.files = [FileConfig(**file) for file in files]
         self.water_nsw = WaterNsw(**water_nsw)
 

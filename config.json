@@ -87,6 +87,10 @@
                 "616e4a88810cbd039c60af03",
                 "616e476e41ac9d03d99b67ed"
             ],
+            "historical_discharge_files": [
+                "historical-dischargerate.csv",
+                "yearly-brooman.csv"
+            ],
             "files": [
                 {
                     "filepath": "combined-precipitation.csv",
@@ -186,7 +190,7 @@
                 {
                     "filepath": "weekly-temperature-table.csv",
                     "name": "weekly-temperature-table",
-                    "chart_id": "3EDKz",
+                    "chart_id": "50whn",
                     "dynamic": true,
                     "columns": [
                         "Location",
