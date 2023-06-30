@@ -19,4 +19,5 @@ jobs:
         envkey_UBIDOTS_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
     - run: pwd
     - run: cd src
-    - run: python main.py
+    - run: pwd
+    - run: python3 main.py
