@@ -20,6 +20,6 @@ jobs:
     - run: |
         pwd
         ls -a
-        echo .env
+        cat .env
         cp /github/workspace/.env src/.env
         python3 main.py
