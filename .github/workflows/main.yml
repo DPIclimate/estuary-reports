@@ -21,4 +21,5 @@ jobs:
         pwd
         cd src
         pwd
+        ls
         python3 main.py
