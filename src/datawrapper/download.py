@@ -15,9 +15,12 @@ def download_image(output_filename: str, chart_id: str, dw_key: str) -> None:
         "accept": "*/*"
     }
 
-    response = requests.get(url, headers=headers)
-
-    response.raise_for_status()
-
-    with open(output_filename, 'wb') as f:
-        f.write(response.content)
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        response = None
+        logging.error(f"Error downloading image from datawrapper.de: {e}")
+    if response is not None:
+        with open(output_filename, 'wb') as f:
+            f.write(response.content)
