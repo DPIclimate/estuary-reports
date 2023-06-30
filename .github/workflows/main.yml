@@ -22,4 +22,5 @@ jobs:
         ls -a
         cat .env
         cp .env src/.env
+        cd src
         python3 main.py
