@@ -1,0 +1,14 @@
+---
+version: "3"
+services:
+  estuary_reports_ubuntu_python:
+    container_name: ubuntu_python
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./requirements.txt:/requirements.txt
+    environment:
+      - TZ="Australia/Sydney"
+    command: "tail -f /dev/null"
