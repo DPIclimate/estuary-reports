@@ -16,7 +16,7 @@ jobs:
       uses: SpicyPizza/create-envfile@v1.3
       with:
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
-        envkey_UBIDOTS_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
+        envkey_CLYDE_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
     - run: |
         pwd
         ls -a
