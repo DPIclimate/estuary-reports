@@ -17,6 +17,5 @@ jobs:
       with:
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_UBIDOTS_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
-    - run: timedatectl set-timezone Australia/Sydney
     - run: cd src
     - run: python main.py
