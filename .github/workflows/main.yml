@@ -17,7 +17,8 @@ jobs:
       with:
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_UBIDOTS_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
-    - run: pwd
-    - run: cd src
-    - run: pwd
-    - run: python3 main.py
+    - run: |
+        pwd
+        cd src
+        pwd
+        python3 main.py
