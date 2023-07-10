@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: bsefton/estuary_reports_ubuntu_python:latest
+    container: bsefton/docker-estuary_reports_ubuntu_python:latest
     steps:
     - name: Python Clone & Run
       uses: actions/checkout@v2
