@@ -44,8 +44,6 @@ def main():
     for site in config['sites']:
         site_config = utils.Config.from_site(site)
 
-        print(site_config)
-
         token = ""
         if site['name'].__contains__('Clyde River'):
             token = clyde_river_key
@@ -110,15 +108,12 @@ def main():
             extremes.new(variable_list, site, token)
             extremes.to_csv(f"{site_directory}/weekly-{variable}-extremes.csv")
 
-            print(f"Variables: {variable_list.__dict__}")
-
             # Create fortnightly csv files
             fortnightly_range_plot = rangeplot.RangePlot.new(variable_list, token)
             fortnightly_range_plot.to_csv(variable, f"{site_directory}/fortnightly-{variable}.csv")
 
             # Create weekly table csv files
             weekly_table = weeklydatatable.Table().new(variable_list, token)
-            print(f"weekly_table: {weekly_table.__dict__}")
             weekly_table.to_csv(variable, f"{site_directory}/weekly-{variable}-table.csv")
 
             fortnightly_chart = fortnightlychart.Chart().new(variable_list, site, token)
@@ -128,12 +123,10 @@ def main():
 
         # Create fortnightly dataset for discharge rate WaterNSW.
         fortnight_start, fortnight_end = utils.two_weeks()
-        print(f"Fortnight Date Range | Start: {int(fortnight_start/1000)}, End: {int(fortnight_end/1000)}")
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("fortnightly", site_directory, site["water_nsw"])
     
         # Create year dataset for discharge rate WaterNSW.
         year_start, year_end = utils.this_year()
-        print(f"Year Date Range | Start: {year_start}, End: {year_end}")
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
         
         # Join discharge dataset files.
@@ -166,7 +159,7 @@ def main():
         cwd = os.getcwd()
         # Change working directory to the site_directory/report folder.
         os.chdir(f"{site_directory}/report")
-
+        print("Generating PDF report, executing pdflatex.")
         cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
         proc = subprocess.Popen(cmd)
         proc.communicate()

@@ -155,7 +155,7 @@
                 },
                 {
                     "filepath": "weekly-salinity-table.csv",
-                    "name": "weekly-salinity-table",
+                    "name": "weekly-salinity",
                     "chart_id": "9FvBg",
                     "dynamic": true,
                     "columns": [
@@ -189,7 +189,7 @@
                 },
                 {
                     "filepath": "weekly-temperature-table.csv",
-                    "name": "weekly-temperature-table",
+                    "name": "weekly-temperature",
                     "chart_id": "50whn",
                     "dynamic": true,
                     "columns": [

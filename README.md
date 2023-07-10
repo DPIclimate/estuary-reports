@@ -12,3 +12,6 @@
 
 ## Custom Docker Image
 #### Requires building on an x86 machine, will not run on GitHub Actions Runners if built on ARM.
+
+## LaTeX PDF Report
+#### Creates a PDF report using Latexmk within the texlive distribution.
