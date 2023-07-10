@@ -3,6 +3,7 @@ import csv
 import os
 import sys
 import logging
+import subprocess
 import ubidots.device.variables as ubidotsvariables
 import data.extremes as dataextremes
 import weekly.table as weeklydatatable
@@ -157,6 +158,28 @@ def main():
             datawrapperdownload.download_image(filename, file['chart_id'], dw_key)
 
     print("Complete.")
+
+    # Generate a PDF report for each site.
+    for site in config['sites']:
+        site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
+        # Get current working directory
+        cwd = os.getcwd()
+        # Change working directory to the site_directory/report folder.
+        os.chdir(f"{site_directory}/report")
+
+        cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
+        proc = subprocess.Popen(cmd)
+        proc.communicate()
+        retcode = proc.returncode
+        if not retcode == 0:
+            if os.path.exists(f'{site_directory}/report/report.pdf'):
+                os.unlink(f'{site_directory}/report/report.pdf')
+            raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
+        os.unlink(f'{site_directory}/report/report.tex')
+        os.unlink(f'{site_directory}/report/report.log')
+        # Change directory back to the original working directory.
+        os.chdir(cwd)
+
 
 
 if __name__ == '__main__':
