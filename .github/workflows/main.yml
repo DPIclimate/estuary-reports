@@ -23,3 +23,8 @@ jobs:
         cp .env src/.env
         cd src
         python3 main.py
+    - name: Upload PDF Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: report.pdf 
+        path: src/output/clyde/report/report.pdf
