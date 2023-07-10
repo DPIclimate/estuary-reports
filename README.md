@@ -1,4 +1,5 @@
 # estuary-reports
+[![Build, Run & Deploy](https://github.com/DPIclimate/estuary-reports/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/DPIclimate/estuary-reports/actions/workflows/main.yml)
 
 #### A dynamic NSW Estuary data report compiler and generator. 
 #### Built using Python, LaTeX and DataWrapper using timeseries data from WaterNSW and Ubidots IoT data platform.
