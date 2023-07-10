@@ -22,5 +22,4 @@ jobs:
         ls -a
         cp .env src/.env
         cd src
-        mkdir output/clyde/imgs
         python3 main.py
