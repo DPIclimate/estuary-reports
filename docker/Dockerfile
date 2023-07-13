@@ -1,7 +1,8 @@
 FROM ubuntu:22.10
 RUN apt-get update && apt-get install -y \
     python3.10 \
-    python3-pip
+    python3-pip \
+    git
     #&& rm -rf /var/lib/apt/lists/*
 
 # Set timezone:
