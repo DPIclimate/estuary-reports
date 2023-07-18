@@ -4,6 +4,7 @@ import os
 import sys
 import logging
 import subprocess
+import time
 import ubidots.device.variables as ubidotsvariables
 import data.extremes as dataextremes
 import weekly.table as weeklydatatable
@@ -66,13 +67,13 @@ def main():
 
         logging.info(f"Creating files for {site['name']} in {site_directory}")
         for file in site['files']:
-            file_path = os.path.join(site_directory, f"{file['name']}.csv")
+            file_path = os.path.join(site_directory, f"{file['filepath']}")
             # Check if file exists, if not create it.
             if overwrite_csvs:
                 with open(file_path, 'w') as f:
                     f.write("")
             else:
-                logging.info(f"File {file['name']}.csv exists. Overwrite set to false, skipping file.")
+                logging.info(f"File {file['filepath']}.csv exists. Overwrite set to false, skipping file.")
             
             if file['dynamic']:
                 #logging.info(f"Creating dynamic columns for {file['name']}.csv")
@@ -91,6 +92,9 @@ def main():
                 with open(file_path, 'w') as f:
                     writer = csv.writer(f)
                     writer.writerow(file['columns'])
+
+        logging.info(f"Created files for {site['name']} in {site_directory}.")
+        time.sleep(5)
 
         # For each sites variables, create csv files.
         for variable in site['variables']:
