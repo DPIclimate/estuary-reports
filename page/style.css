@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+:root {
+	--div-min-width: 600px;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background: #f4f4f4;
+	min-width: var(--div-min-width);
+}
+
+.main-content {
+	margin: 1rem;
+	margin-top: 50px;
+}
+
+.header{
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	flex-direction: row;
+	align-items: center;
+	width: 100vw;
+	height: 120px;
+	color: #002664;
+	min-width: var(--div-min-width);
+}
+
+.dpi-logo {
+	max-height: 80%;
+	padding: 1rem;
+}
+
+.sliderDiv {
+	display: inline-flex;
+	padding-left: 0.2rem;
+	padding-right: 0.5rem;
+	marign-left: 1rem;
+	width: 90%;
+	max-width: 900px;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	flex-direction: row;
+	align-items: center;
+}
+
+.salinitySlider {
+	-webkit-appearance: none;  
+	appearance: none;
+	height: 20px; 
+	background: #d3d3d3; 
+	opacity: 0.7;
+	-webkit-transition: .2s; 
+	transition: opacity .2s;
+	width: 80%;
+}
+
+.salinitySlider::-webkit-slider-thumb {
+	-webkit-appearance: none; 
+	appearance: none;
+	width: 15px; 
+	height: 25px; 
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background: #002664; 
+	cursor: pointer;
+}
+
+.salinitySlider::-moz-range-thumb {
+	width: 15px; 
+	height: 25px; 
+	background: #002664; 
+	cursor: pointer; 
+}
+
+#salinityControl {
+	filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.4));
+	cursor: pointer;
+	width: 30px;
+}
+
+.salinitySlider:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.tempSlider {
+	width: 100%;
+}
+
+.tempSlider {
+	-webkit-appearance: none;  
+	appearance: none;
+	height: 20px; 
+	background: #d3d3d3; 
+	opacity: 0.7;
+	-webkit-transition: .2s; 
+	transition: opacity .2s;
+	width: 80%;
+}
+
+.tempSlider::-webkit-slider-thumb {
+	-webkit-appearance: none; 
+	appearance: none;
+	width: 15px; 
+	height: 25px; 
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background: #002664; 
+	cursor: pointer;
+}
+
+.tempSlider::-moz-range-thumb {
+	width: 15px; 
+	height: 25px; 
+	background: #002664; 
+	cursor: pointer; 
+}
+
+#tempControl {
+	filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.4));
+	cursor: pointer;
+	width: 30px;
+}
+
+.tempSlider:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+
+.hidden { display: none; }
+input + label { display: inline-block; }
+
+input ~ .tab { display: none; }
+#cc-tab1:checked ~ .tab.current-water,
+#cc-tab2:checked ~ .tab.current-weather { display: block; }
+
+input ~ .tab { display: none; }
+#tab1:checked ~ .tab.chart-view,
+#tab2:checked ~ .tab.indepth-view { display: block; }
+#tab3:checked ~ .tab.fortnightly-salinity-view { display: block; }
+#tab4:checked ~ .tab.map-salinity-view { display: block; }
+
+input + label {
+	border: 1px solid #002664;
+	background: #002664;
+	color: #fff;
+	padding: 4px 12px;
+	border-radius: 4px 4px 0 0;
+	position: relative;
+	top: 1px;
+}
+input:checked + label {
+	background: #FFF;
+	color: #000;
+	border-bottom: 1px solid transparent;
+}
+input ~ .tab {
+	border-top: 1px solid #999;
+	padding: 12px;
+}
+
+label:hover {
+	cursor: pointer;
+	opacity: 80%;
+}
+
+input ~ .tab { display: none; }
+#tab1-temp:checked ~ .tab.temp-chart-view,
+#tab2-temp:checked ~ .tab.temp-indepth-view { display: block; }
+#tab3-temp:checked ~ .tab.fortnightly-temp-view { display: block; }
+#tab4-temp:checked ~ .tab.map-temp-view { display: block; }
+#tab5-temp:checked ~ .tab.historical-temp-view { display: block; }
+
+
+#tab1-temp-h:checked ~ .tab.h-temp-avg,
+#tab2-temp-h:checked ~ .tab.h-temp-min { display: block; }
+#tab3-temp-h:checked ~ .tab.h-temp-max { display: block; }
+
+.variables-table {
+	padding: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 1rem;
+	background: #fff;
+}
+
+input ~ .tab { display: none; }
+#tab1-precip:checked ~ .tab.weekly-view,
+#tab2-precip:checked ~ .tab.yearly-view { display: block; }
+
+.precip-chart {
+	flex: 45%;
+	padding: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 1rem;
+	background: #fff;
+}
+
+
+.precip-and-table {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+input ~ .tab { display: none; }
+#tab1-flow:checked ~ .tab.weekly-view-flow,
+#tab2-flow:checked ~ .tab.yearly-view-flow { display: block; }
+
+.fieldwork-table {
+	flex: 46%;
+}
+
+.maintain-table {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #fff;
+	padding: 1rem;
+	margin: 1rem;
+}
+
+.maintain-table a {
+	align-items: left;
+	text-align: right;
+}
+
+.fieldwork-table th {
+	padding: 10px;
+	background: #1D3D59;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.fieldwork-table td {
+	padding: 0.5rem;
+}
+
+#data-table {
+	min-width: 200px;
+	width: 100%;
+}
+
+.error-row {
+	background-color: #f79e9e;
+}
+
+.maintainance-row {
+	background-color: #a8e0b7;
+}
+
+.air-humid-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.air-humid-chart {
+	min-height: 300px;
+	max-height: 400px;
+}
+
+.values-table-container {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.values-table {
+	padding: 1rem;
+	margin: 1rem;
+	background: #fff;
+	width: 400px;
+	border-radius: 5px;
+	padding-bottom: 0;
+}
+
+.values-table h3 {
+	padding: 0;
+	margin: 0;
+}
+
+.funding-source {
+	color: #002664;
+	text-align: center;
+}
+
+.footer {
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+	align-items: center;
+	width: 100vw;
+	min-width: var(--div-min-width);
+	background: #333;
+	height: 60px;
+	bottom: 0;
+}
+
+.footer h3, h4 {
+	color: white;
+}
+
