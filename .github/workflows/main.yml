@@ -29,8 +29,3 @@ jobs:
       with:
         name: report.pdf 
         path: src/output/clyde/report/report.pdf
-    - name: Deploy GH Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.7
-      with:
-        branch: gh-pages # The branch the action should deploy to.
-        folder: page # The folder the action should deploy.
