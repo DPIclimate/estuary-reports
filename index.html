@@ -47,26 +47,26 @@
 		</div>
 
 		<div class="main-content">
-			<div class="maintain-table" style="display: flex; flex-direction: column; justify-content: space-around;">
+			<div class="estuaries-table" style="display: flex; flex-direction: column; justify-content: center;	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #fff; padding: 1rem; margin: 1rem;">
 				<h2>Estuaries</h2>
-				<div style="align-items: center; display: flex; flex-direction: right; justify-content: space-around;">
-					<a href="clyde-river" style="color: black; text-align: center; display: inline-block">
-						Clyde River <br>
-						<img src="assets/clyde_river.jpg" alt="Clyde River" style="width:300px;height:200px;">
+				<div class="estuaries-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+					<a href="clyde-river" style="color: black; text-align: center; display: inline-block; margin: 10px;">
+					  <img src="assets/clyde_river.jpg" alt="Clyde River" style="width:100%;max-width:300px;height:auto;">
+					  <br>Clyde River
 					</a>
-					<a href="port-stephens" style="color: black; text-align: center; display: inline-block">
-						Port Stephens <br>
-						<img src="assets/port_stephens.jpg" alt="Clyde River" style="width:300px;height:200px;">
+					<a href="port-stephens" style="color: black; text-align: center; display: inline-block; margin: 10px;">
+					  <img src="assets/port_stephens.jpg" alt="Port Stephens" style="width:100%;max-width:300px;height:auto;">
+					  <br>Port Stephens
 					</a>
-					<a href="manning-river" style="color: black; text-align: center; display: inline-block">
-						Manning River <br>
-						<img src="assets/manning_river.jpg" alt="Clyde River" style="width:300px;height:200px;">
+					<a href="manning-river" style="color: black; text-align: center; display: inline-block; margin: 10px;">
+					  <img src="assets/manning_river.jpg" alt="Manning River" style="width:100%;max-width:300px;height:auto;">
+					  <br>Manning River
 					</a>
-					<a href="wallis-lake" style="color: black; text-align: center; display: inline-block">
-						Wallis Lake <br>
-						<img src="assets/wallis_lake.jpg" alt="Clyde River" style="width:300px;height:200px;">
+					<a href="wallis-lake" style="color: black; text-align: center; display: inline-block; margin: 10px;">
+					  <img src="assets/wallis_lake.jpg" alt="Wallis Lake" style="width:100%;max-width:300px;height:auto;">
+					  <br>Wallis Lake
 					</a>
-				</div>
+				  </div>
 				<br>
 				<hr width="100%">
 				<br>
@@ -88,6 +88,33 @@
 						border: 1px solid #002664; text-decoration: none;">Report an Issue</a>
 				</div>
 			</div>
+
+			<style>
+				/* Media query for screens smaller than 768px */
+				@media (max-width: 767px) {
+					.estuaries-container {
+						flex-direction: column;
+						align-items: center;
+					}
+					.estuaries-container {
+						margin: 10px 0;
+						display: flex !important;
+					}
+				}
+				@media (max-width: 715px) {
+					.estuaries-table {
+						margin-top: 100px !important;
+					}
+					.estuaries-container {
+						display: flex !important;
+					}
+				}
+				@media (min-width: 1399) {
+					.estuaries-container {
+						display: flex !important;
+					}
+				}
+			  </style>
 
 			<h3 class="funding-source">This work has been produced by the NSW Primary Industries Climate Change Research Strategy funded by the NSW Climate Change Fund.</h3>
 			<h4 class="funding-source">This data is released by NSW Department of Primary Industries for evaluation purposes only and should not be relied upon for business decisions, carrying out risk assessments or other uses. Please provide feedback and questions to <a href="mailto: ben.sefton@dpi.nsw.gov.au">ben.sefton@dpi.nsw.gov.au</a></h4>
