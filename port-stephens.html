@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<head>
+		<title>FarmDesisionTECH Port Stephens Water Quality Report</title>
+		<meta charset="utf-8">
+		<meta http-equiv=”Content-Type”/>
+		<meta name="google-site-verification" content="0Al8AazZiQLl8qHgusbGu6cuE1Dz3MN6TC47qit7iGE"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="description" content="Summary of water quality for Port Stephens.">
+		<meta name="keywords" content="Water quality Port Stephens NSW DPI Primary Industries">
+		<link rel="icon" href="assets/dpi-logo-only.png">
+		<link href="style.css" rel="stylesheet" type="text/css">
+		<script src="table.js" type="text/javascript"></script>
+		<script src="current_conditions.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" type="text/javascript"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.1/chartjs-plugin-zoom.min.js" integrity="sha512-klQv6lz2YR+MecyFYMFRuU2eAl8IPRo6zHnsc9n142TJuJHS8CG0ix4Oq9na9ceeg1u5EkBfZsFcV3U7J51iew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js" integrity="sha512-HrwQrg8S/xLPE6Qwe7XOghA/FOxX+tuVF4TxbvS73/zKJSs/b1gVl/P4MsdfTFWYFYg/ISVNYIINcg35Xvr6QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script type="text/javascript">
+			var salinityPlay = false;
+			var timer;
+			var temp_timer;
+			var i = 0;
+			var temp_i = 0;
+			var salinity_urls = [];
+			var temp_urls = [];
+			for (let i = 0; i < 25; i++) {
+				var surl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/"+ i + ".png";
+				var turl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/"+ i + ".png";
+				salinity_urls.push(surl);
+				temp_urls.push(turl);
+			}
+			createValuesTable();
+		</script>
+	</head>
+	<body>
+
+		<div class="header" style="margin-top: 1%; margin-bottom: -2%;">
+			<img src="assets/DPI_logo.png" class="dpi-logo"/>
+			<div>
+				<h1>FarmDecisionTECH</h1>
+				<h2>Port Stephens Report</h2>
+			</div>
+		</div>
+
+		<div class="main-content">
+			<div class="maintain-table" style="display: flex; flex-direction: column; justify-content: space-around;">
+				<h2>Information</h2>
+				<hr width="100%">
+				<table class="fieldwork-table">
+					<tr>
+						<th>Date</th>
+						<th>Activity</th>
+						<th>Notes</th>
+					</tr>
+					<tr class="maintainance-row">
+						<td>TBD June 2023</td>
+						<td>Maintainance</td>
+						<td>The FarmDecsionTECH team will be conducting maintainance on the buoys and weather station.</td>
+					</tr>
+				</table>
+				<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: left;"> 
+ 					<a href="mailto: mal.kul@dpi.nsw.gov.au?subject=Report Inquiry" target="_blank" 
+						style="color: #002664; background: #fff; padding: 0.5rem; margin-top: 0.8rem;
+						border: 1px solid #002664; text-decoration: none;">Report an Issue</a>
+				</div>
+			</div>
+
+			<div class="variables-table">
+				<h2>Current Conditions</h2>
+				<hr>
+
+				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab1"  checked />
+				<label for="cc-tab1">Water</label>
+
+				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab2" />
+				<label for="cc-tab2">Weather</label>
+
+				<div class="tab current-water">
+					<table class="stripe hover row-border order-column" id="data-table" style="width: 100%;">
+						<thead id="data-head"></thead>
+						<tbody class="data-body" id="data-body"></tbody>
+					</table>
+					<p id="table-info">Loading... refresh page if no table appears.</p>
+				</div>
+				<div class="tab current-weather">
+					<canvas class="air-humid-chart" id="air-humid-chart"></canvas>
+					<div class="values-table-container">
+						<table class="values-table">
+							<thead class="values-table-head">
+								<tr>
+									<th></th>
+									<th id="date-value">-</th>
+								</tr>
+							</thead>
+							<tbody class="values-table-body">
+								<tr class="temperature-row" style="color: rgb(255, 99, 132)">
+									<td>Air Temperature</td>
+									<td><h3 id="temperature-value">- &deg;C</h3></td>
+								</tr>
+								<tr class="humidity-row" style="color: #1BA098">
+									<td>Humidity</td>
+									<td><h3 id="humidity-value">- %</h3></td>
+								</tr>
+								<tr class="wind-row" style="color: #1D1D2C">
+									<td>Wind Speed/Direction</td>
+									<td><h3 id="wind-value">- kn WSW</h3></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<script>
+					getTempAndHumid().then(config => {
+						new Chart(document.getElementById('air-humid-chart'), config)
+					});
+				</script>
+			</div>
+
+			<div class="variables-table">
+				<h2>Salinity</h2>
+				<hr>
+
+				<input class="hidden" type="radio" name="tabs" id="tab1" checked />
+				<label for="tab1">Chart View</label>
+
+				<input class="hidden" type="radio" name="tabs" id="tab2"/>
+				<label for="tab2">In-depth View</label>
+
+				<input class="hidden" type="radio" name="tabs" id="tab3"/>
+				<label for="tab3">Fortnightly Trend</label>
+
+				<input class="hidden" type="radio" name="tabs" id="tab4"/>
+				<label for="tab4">Map View</label>
+
+				<div class="tab chart-view">
+					<iframe title="7-Day Salinity Average Trend" aria-label="Interactive line chart" id="datawrapper-chart-udOPz" src="https://datawrapper.dwcdn.net/udOPz/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="583"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					<hr>
+					<iframe title="Weekly Minimum and Maximum Water Salinity" aria-label="Range Plot" id="datawrapper-chart-eEJLQ" src="https://datawrapper.dwcdn.net/eEJLQ/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="166"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab indepth-view">
+					<iframe title="7-Day Salinity Average Trend" aria-label="Split Bars" id="datawrapper-chart-Kf811" src="https://datawrapper.dwcdn.net/Kf811/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="618"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab fortnightly-salinity-view">
+					<iframe title="Fortnightly Average Salinity Trend" aria-label="Arrow Plot" id="datawrapper-chart-9bX8b" src="https://datawrapper.dwcdn.net/9bX8b/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="498"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+
+				</div>
+
+				<div class="tab map-salinity-view" style="max-width: 1500px">
+					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/0.png" 
+						style="width: 100%; margin: auto; max-width: 1008px;" id="salinityImg">
+					<div class="sliderDiv">
+						<a onclick="play_timer()"><img id="salinityControl" src="assets/play-circle.svg"></a>
+						<input type="range" min="-24" max="0" value="0"  class="salinitySlider" id="salinitySlider">
+						<div class="salinityTime">
+							<h3 id="salinityCurrent" style="color: #002664;">0h</h3>
+						</div>
+						<script>
+							function salinity_play() {
+								var ts = -24 + i;
+								var img = document.getElementById("salinityImg");
+								img.src = salinity_urls[i];
+								document.getElementById("salinityCurrent").innerHTML = ts + "h";
+								document.getElementById("salinitySlider").value = ts;
+								i = (i + 1) % salinity_urls.length;
+							}
+
+							function play_timer(){
+								if (timer) {
+									clearInterval(timer);
+									timer = null;
+									document.getElementById("salinityControl").src = "assets/play-circle.svg";
+								} else {
+									timer = setInterval("salinity_play()", 300)
+									document.getElementById("salinityControl").src = "assets/pause-circle.svg";
+								}
+							}
+
+							salinitySlider.oninput = function() {
+								var value = 24 - -this.value;
+								document.getElementById("salinityCurrent").innerHTML = this.value + "h";
+								var img = document.getElementById("salinityImg");
+								img.src = salinity_urls[value];
+							}
+						</script>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="variables-table">
+				<h2>Water Temperature</h2>
+				<hr>
+
+				<input class="hidden" type="radio" name="tabs-temp" id="tab1-temp" checked />
+				<label for="tab1-temp">Chart View</label>
+
+				<input class="hidden" type="radio" name="tabs-temp" id="tab2-temp"/>
+				<label for="tab2-temp">In-depth View</label>
+
+				<input class="hidden" type="radio" name="tabs-temp" id="tab3-temp"/>
+				<label for="tab3-temp">Fortnightly Trend</label>
+
+				<input class="hidden" type="radio" name="tabs-temp" id="tab4-temp"/>
+				<label for="tab4-temp">Map View</label>
+
+				<input class="hidden" type="radio" name="tabs-temp" id="tab5-temp"/>
+				<label for="tab5-temp">Historical</label>
+
+
+				<div class="tab temp-chart-view">
+					<iframe title="7-Day Average Temperature Trend" aria-label="Interactive line chart" id="datawrapper-chart-3BIUb" src="https://datawrapper.dwcdn.net/3BIUb/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="583"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				<hr>
+					<iframe title="Weekly Minimum and Maximum Water Temperature" aria-label="Range Plot" id="datawrapper-chart-TQXEq" src="https://datawrapper.dwcdn.net/TQXEq/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="166"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>	
+				</div>
+
+				<div class="tab temp-indepth-view">
+					<iframe title="7-Day Temperature Average Trend" aria-label="Split Bars" id="datawrapper-chart-73fCc" src="https://datawrapper.dwcdn.net/73fCc/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="599"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab fortnightly-temp-view">
+					<iframe title="Fortnightly Average Temperature Trend" aria-label="Arrow Plot" id="datawrapper-chart-FRGYL" src="https://datawrapper.dwcdn.net/FRGYL/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="498"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab map-temp-view">
+					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/0.png" 
+						style="width: 100%; margin: auto; max-width: 1008px;" id="tempImg">
+					<div class="sliderDiv">
+						<a onclick="temp_play_timer()"><img id="tempControl" src="assets/play-circle.svg"></a>
+						<input type="range" min="-24" max="0" value="0"  class="tempSlider" id="tempSlider">
+						<div class="tempTime">
+							<h3 id="tempCurrent" style="color: #002664;">0h</h3>
+						</div>
+						<script>
+							function temp_play() {
+								var ts = -24 + temp_i;
+								var img = document.getElementById("tempImg");
+								img.src = temp_urls[temp_i];
+								document.getElementById("tempCurrent").innerHTML = ts + "h";
+								document.getElementById("tempSlider").value = ts;
+								temp_i = (temp_i + 1) % temp_urls.length;
+							}
+
+							function temp_play_timer(){
+								if (temp_timer) {
+									clearInterval(temp_timer);
+									temp_timer = null;
+									document.getElementById("tempControl").src = "assets/play-circle.svg";
+								} else {
+									temp_timer = setInterval("temp_play()", 300)
+									document.getElementById("tempControl").src = "assets/pause-circle.svg";
+								}
+							}
+
+							tempSlider.oninput = function() {
+								var value = 24 - -this.value;
+								document.getElementById("tempCurrent").innerHTML = this.value + "h";
+								var img = document.getElementById("tempImg");
+								img.src = temp_urls[value];
+							}
+						</script>
+					</div>
+				</div>
+
+				<div class="tab historical-temp-view">
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab1-temp-h" checked />
+					<label for="tab1-temp-h">Average</label>
+
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab2-temp-h"/>
+					<label for="tab2-temp-h">Minimum</label>
+
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab3-temp-h"/>
+					<label for="tab3-temp-h">Maxiumum</label>
+
+					<div class="tab h-temp-avg">
+						<iframe title="Historical and Current Average Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-P4JnS" src="https://datawrapper.dwcdn.net/P4JnS/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="573"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					</div>
+					<div class="tab h-temp-max">
+						<iframe title="Historical and Current Maximum Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-yKBPg" src="https://datawrapper.dwcdn.net/yKBPg/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="594"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					</div>
+					<div class="tab h-temp-min">
+						<iframe title="Historical and Current Minimum Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-wEbn0" src="https://datawrapper.dwcdn.net/wEbn0/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="594"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					</div>
+				</div>
+			</div>
+
+			<div class="variables-table">
+				<h2>Precipitation</h2>
+				<hr>
+				
+				<input class="hidden" type="radio" name="tabs-precip" id="tab2-precip" checked/>
+				<label for="tab2-precip">Yearly</label>
+
+				<input class="hidden" type="radio" name="tabs-precip" id="tab1-precip"/>
+				<label for="tab1-precip">Weekly</label>
+
+				<div class="tab yearly-view">
+					<iframe title="Year-to-Date Precipitation" aria-label="Interactive line chart" id="datawrapper-chart-6W882" src="https://datawrapper.dwcdn.net/6W882/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="442"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab weekly-view">
+					<iframe title="Clyde River Precipitation" aria-label="Column Chart" id="datawrapper-chart-JCtlb" src="https://datawrapper.dwcdn.net/JCtlb/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="417"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+			</div>
+
+			<div class="variables-table">
+				<h2>Upstream Discharge</h2>
+				<hr>
+
+				<input class="hidden" type="radio" name="tabs-flow" id="tab2-flow" checked/>
+				<label for="tab2-flow">Yearly</label>
+
+				<input class="hidden" type="radio" name="tabs-flow" id="tab1-flow"/>
+				<label for="tab1-flow">Fortnightly</label>
+
+
+				<div class="tab yearly-view-flow">
+					<iframe title="Cumulative Daily Discharge-Rate Brooman" aria-label="Interactive line chart" id="datawrapper-chart-4sWJe" src="https://datawrapper.dwcdn.net/4sWJe/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="656"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+				<div class="tab weekly-view-flow">
+					<iframe title="Brooman Tributary Fortnightly Discharge rate" aria-label="Column Chart" id="datawrapper-chart-Gkj6A" src="https://datawrapper.dwcdn.net/Gkj6A/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="600"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+
+			</div>
+
+			<h3 class="funding-source">This work has been produced by the NSW Primary Industries Climate Change Research Strategy funded by the NSW Climate Change Fund.</h3>
+			<h4 class="funding-source">This data is released by NSW Department of Primary Industries for evaluation purposes only and should not be relied upon for business decisions, carrying out risk assessments or other uses. Please provide feedback and questions to <a href="mailto: ben.sefton@dpi.nsw.gov.au">ben.sefton@dpi.nsw.gov.au</a></h4>
+		</div>
+	</body>
+	<footer>
+		<div class="footer">
+			<h3>Climate Smart Pilots</h3>
+		</div>
+	</footer>
+</html>
+
