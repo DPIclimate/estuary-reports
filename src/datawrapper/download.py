@@ -14,7 +14,7 @@ def download_image(output_filename: str, chart_id: str, dw_key: str) -> None:
         "accept": "*/*"
     }
 
-    for i in range(2):
+    for i in range(5):
         try:
             logging.info(f"Downloading image from datawrapper.de (Attempt: {i+1}) to {output_filename}")
             response = requests.get(url, headers=headers)
