@@ -23,17 +23,11 @@ async function createValuesTable() {
 
 	const temperature_data = {
 		ids: [
-			"620c34a236478d1df15fcd03",
-			"6181b4e2852f0907a66ca28b",
-			"61788ec5dc917002aa2562e2",
-			"61788eb9a73c3401fa330fbf",
-			"6174a4cddc9170000d0c6be1",
-			"61732bf7852f09000e22a105",
-			"617318d1852f09000e22a102",
-			"6171f4d686f43b04efae2d48",
-			"616e4a88810cbd039c60af03",
-			"616e493d810cbd03d916fa69",
-			"616e476e41ac9d03d99b67ed"
+			"",
+			"",
+			"",
+			"",
+			""
 		]
 	};
 
