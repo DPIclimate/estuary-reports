@@ -162,6 +162,8 @@ def main():
 
         print(f"{site['name']} complete.")
 
+
+    for site in config['sites']:
         if site['name'] == 'Clyde River':
             # Generate a PDF report for each site.
             for site in config['sites']:
