@@ -25,7 +25,7 @@ def download_image(output_filename: str, chart_id: str, dw_key: str) -> None:
             return
         except requests.exceptions.RequestException as e:
             logging.error(f"Error downloading image from datawrapper.de: {e}")
-            if i == 0:
+            if i < 4:
                 logging.info(f"Retrying image download for {output_filename}")
                 time.sleep(5)
                 continue
