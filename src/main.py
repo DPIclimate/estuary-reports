@@ -164,6 +164,7 @@ def main():
 
 
     for site in config['sites']:
+        site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
         if site['name'] == 'Clyde River':
             # Generate a PDF report for each site.
             for site in config['sites']:
