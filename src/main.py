@@ -28,7 +28,9 @@ def main():
     load_dotenv()
     dw_key = os.getenv('DW_KEY')
     clyde_river_key = os.getenv('CLYDE_ORG_KEY')
-    wallace_lakes_key = os.getenv('CLYDE_ORG_KEY')
+    port_stephens_key = os.getenv('PORT_STEPHENS_ORG_KEY')
+    wallis_lakes_key = os.getenv('WALLIS_LAKES_ORG_KEY')
+    manning_river_key = os.getenv('MANNING_RIVER_ORG_KEY')
     use_cache = False
 
     cwd = os.getcwd()
@@ -48,22 +50,23 @@ def main():
         token = ""
         if site['name'].__contains__('Clyde River'):
             token = clyde_river_key
-        elif site['name'] == 'Wallace Lakes':
-            token = wallace_lakes_key
+        elif site['name'] == 'Port Stephens':
+            token = port_stephens_key
+        elif site['name'] == 'Wallis Lake':
+            token = wallis_lakes_key
         elif site['name'] == 'Manning River':
-            token = ""
-        else:
-            token = clyde_river_key
+            token = manning_river_key
         
-        print(f"{site['name']}: {token}")
+        
+        print(f"Creating and retrieving {site['name']} data.")
 
         site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
         # Check if data/site['directory'] exists, if not create it.
         if not os.path.exists(site_directory):
-            logging.info(f"Directory {site_directory} does not exist, creating it.")
+            logging.info(f"Directory {site_directory} does not exist, creating it for output.")
             os.makedirs(site_directory)
         else:
-            logging.info(f"Directory {site_directory} exists, switching to it.")
+            logging.info(f"Directory {site_directory} exists, using it for output.")
 
         logging.info(f"Creating files for {site['name']} in {site_directory}")
         for file in site['files']:
@@ -98,7 +101,7 @@ def main():
 
         # For each sites variables, create csv files.
         for variable in site['variables']:
-            logging.info(f"Processing {variable} variable.")
+            #logging.info(f"Processing {variable} variable.")
             if use_cache:
                 variable_list = ubidotsvariables.VariablesList.new_from_cache(site_directory, variable)
             else:
@@ -134,18 +137,21 @@ def main():
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
         
         # Join discharge dataset files.
-        yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
+        if site['name'] == 'Clyde River':
+            yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
 
         # Create weekly dataset for precipitation bar chart. Using Variable ID for aggregate data for total daily rainfall values.
         weeklybar.weekly_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
 
         # Create year to date precipitation datasets.
         yearlydata.year_to_date_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
-        yearlydata.join_precipitation_datasets(site_directory)
+        if site['name'] == 'Clyde River':
+            yearlydata.join_precipitation_datasets(site_directory)
 
         # Create year to date and historical water temperature datasets.
         yearlydata.year_to_date_temperature_to_csv(site_directory, token, site['water_temperature_variables'])
-        yearlydata.historical_temperature_datasets(site_directory)
+        if site['name'] == 'Clyde River':
+            yearlydata.historical_temperature_datasets(site_directory)
 
         datawrapperexport.all_files_to_datawrapper(site_directory, site, dw_key)
 
@@ -154,28 +160,29 @@ def main():
             filename = f"{site_directory}/imgs/{file['name']}.png"
             datawrapperdownload.download_image(filename, file['chart_id'], dw_key)
 
-    print("Complete.")
+        print(f"{site['name']} complete.")
 
-    # Generate a PDF report for each site.
-    for site in config['sites']:
-        site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
-        # Get current working directory
-        cwd = os.getcwd()
-        # Change working directory to the site_directory/report folder.
-        os.chdir(f"{site_directory}/report")
-        print("Generating PDF report, executing pdflatex.")
-        cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
-        proc = subprocess.Popen(cmd)
-        proc.communicate()
-        retcode = proc.returncode
-        if not retcode == 0:
-            if os.path.exists(f'{site_directory}/report/report.pdf'):
-                os.unlink(f'{site_directory}/report/report.pdf')
-            raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
-        os.unlink(f'{site_directory}/report/report.tex')
-        os.unlink(f'{site_directory}/report/report.log')
-        # Change directory back to the original working directory.
-        os.chdir(cwd)
+        if site['name'] == 'Clyde River':
+            # Generate a PDF report for each site.
+            for site in config['sites']:
+                site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
+                # Get current working directory
+                cwd = os.getcwd()
+                # Change working directory to the site_directory/report folder.
+                os.chdir(f"{site_directory}/report")
+                print("Generating PDF report, executing pdflatex.")
+                cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
+                proc = subprocess.Popen(cmd)
+                proc.communicate()
+                retcode = proc.returncode
+                if not retcode == 0:
+                    if os.path.exists(f'{site_directory}/report/report.pdf'):
+                        os.unlink(f'{site_directory}/report/report.pdf')
+                    raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
+                os.unlink(f'{site_directory}/report/report.tex')
+                os.unlink(f'{site_directory}/report/report.log')
+                # Change directory back to the original working directory.
+                os.chdir(cwd)
 
 
 
