@@ -1,6 +1,274 @@
 {
     "sites": [
         {   
+            "directory": "port-stephens",
+            "name": "Port Stephens",
+            "devices": [
+                {
+                    "name": "Cromartys Bay",
+                    "location": "Cromartys Bay",
+                    "harvest_area": "Cromartys Bay",
+                    "buoy_number": "1"
+                },
+                {
+                    "name": "Carrington Bay",
+                    "location": "Carrington Bay",
+                    "harvest_area": "Carrington Bay",
+                    "buoy_number": "2"
+                },
+                {
+                    "name": "North Arm Cove",
+                    "location": "Bundabah",
+                    "harvest_area": "Bundabah",
+                    "buoy_number": "3"
+                },
+                {
+                    "name": "Lemon Tree Passage",
+                    "location": "Lemon Tree Passage",
+                    "harvest_area": "Lemon Tree Passage",
+                    "buoy_number": "4"
+                },
+                {
+                    "name": "Oyster Cove",
+                    "location": "Oyster Cove",
+                    "harvest_area": "Oyster Cove",
+                    "buoy_number": "5"
+                }
+            ],
+            "ubidots_aws_variable_ids": [
+                "64be175d36a1c6000cb9274b"
+            ],
+            "variables": [
+                "salinity", 
+                "temperature"
+            ],
+            "harvest_areas": [
+                "Cromartys Bay",
+                "Carrington Bay",
+                "Lemon Tree Passage",
+                "Oyster Cove"
+            ],
+            "water_temperature_variables": [
+                "64be1ae67fedc1000c6517f0",
+                "64be1b46fe7bed000b6ccfab",
+                "64be1b7d7fedc1000c6517f1",
+                "64be1bad36a1c6000cb9274f",
+                "64be17df7fedc1000c6517ef",
+                "64be1bdc36a1c6000cb92750"
+            ],
+            "historical_discharge_files": [
+                "historical-dischargerate.csv"
+            ],
+            "files": [
+                {
+                    "filepath": "combined-precipitation.csv",
+                    "name": "yearly-precipitation",
+                    "chart_id": "i3brJ",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "2023"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature.csv",
+                    "name": "fortnightly-temperature",
+                    "chart_id": "0M3e8",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity.csv",
+                    "name": "fortnightly-salinity",
+                    "chart_id": "NQ3ve",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-precipitation.csv",
+                    "name": "weekly-precipitation",
+                    "chart_id": "4WakW",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "precipitation"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-table.csv",
+                    "name": "weekly-salinity",
+                    "chart_id": "un8OQ",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity-chart.csv",
+                    "name": "fortnightly-salinity-chart",
+                    "chart_id": "gt27x",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Cromartys Bay",
+                        "Carrington Bay",
+                        "Lemon Tree Passage",
+                        "Oyster Cove"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature-chart.csv",
+                    "name": "fortnightly-temperature-chart",
+                    "chart_id": "4PKdO",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Cromartys Bay",
+                        "Carrington Bay",
+                        "Lemon Tree Passage",
+                        "Oyster Cove"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-table.csv",
+                    "name": "weekly-temperature",
+                    "chart_id": "Cv7T6",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-pikesxin.csv",
+                    "name": "fortnightly-pikesxin",
+                    "chart_id": "RHNgd",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-booral.csv",
+                    "name": "fortnightly-booral",
+                    "chart_id": "eoCg7",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-damsite.csv",
+                    "name": "fortnightly-damsite",
+                    "chart_id": "f6p83",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-pikesxin.csv",
+                    "name": "yearly-pikesxin",
+                    "chart_id": "YhaTi",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-booral.csv",
+                    "name": "yearly-booral",
+                    "chart_id": "V9N9H",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-damsite.csv",
+                    "name": "yearly-damsite",
+                    "chart_id": "2034F",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-extremes.csv",
+                    "name": "weekly-salinity-extremes",
+                    "chart_id": "cPiZ2",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-extremes.csv",
+                    "name": "weekly-temperature-extremes",
+                    "chart_id": "L7zV4",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                }
+            ],
+            "water_nsw": {
+                "sites": [
+                    {
+                        "name": "pikesxin",
+                        "id": 209002
+                    },
+                    {
+                        "name": "booral",
+                        "id": 209003
+                    },
+                    {
+                        "name": "damsite",
+                        "id": 209018
+                    }
+                ], 
+                "defaults": {
+                    "params": {
+                        "varfrom": 100.00,
+                        "interval": "day",
+                        "varto": 141.00,
+                        "datasource": "CP",
+                        "data_type": "mean",
+                        "multiplier": 1
+                    },
+                    "function": "get_ts_traces",
+                    "version": 2
+                }
+            }
+        },
+        {   
             "directory": "clyde",
             "name": "Clyde River",
             "devices": [
@@ -294,274 +562,6 @@
                     {
                         "name": "buckenbowra",
                         "id": 216009
-                    }
-                ], 
-                "defaults": {
-                    "params": {
-                        "varfrom": 100.00,
-                        "interval": "day",
-                        "varto": 141.00,
-                        "datasource": "CP",
-                        "data_type": "mean",
-                        "multiplier": 1
-                    },
-                    "function": "get_ts_traces",
-                    "version": 2
-                }
-            }
-        },
-        {   
-            "directory": "port-stephens",
-            "name": "Port Stephens",
-            "devices": [
-                {
-                    "name": "Cromartys Bay",
-                    "location": "Cromartys Bay",
-                    "harvest_area": "Cromartys Bay",
-                    "buoy_number": "1"
-                },
-                {
-                    "name": "Carrington Bay",
-                    "location": "Carrington Bay",
-                    "harvest_area": "Carrington Bay",
-                    "buoy_number": "2"
-                },
-                {
-                    "name": "North Arm Cove",
-                    "location": "Bundabah",
-                    "harvest_area": "Bundabah",
-                    "buoy_number": "3"
-                },
-                {
-                    "name": "Lemon Tree Passage",
-                    "location": "Lemon Tree Passage",
-                    "harvest_area": "Lemon Tree Passage",
-                    "buoy_number": "4"
-                },
-                {
-                    "name": "Oyster Cove",
-                    "location": "Oyster Cove",
-                    "harvest_area": "Oyster Cove",
-                    "buoy_number": "5"
-                }
-            ],
-            "ubidots_aws_variable_ids": [
-                "64be175d36a1c6000cb9274b"
-            ],
-            "variables": [
-                "salinity", 
-                "temperature"
-            ],
-            "harvest_areas": [
-                "Cromartys Bay",
-                "Carrington Bay",
-                "Lemon Tree Passage",
-                "Oyster Cove"
-            ],
-            "water_temperature_variables": [
-                "64be1ae67fedc1000c6517f0",
-                "64be1b46fe7bed000b6ccfab",
-                "64be1b7d7fedc1000c6517f1",
-                "64be1bad36a1c6000cb9274f",
-                "64be17df7fedc1000c6517ef",
-                "64be1bdc36a1c6000cb92750"
-            ],
-            "historical_discharge_files": [
-                "historical-dischargerate.csv"
-            ],
-            "files": [
-                {
-                    "filepath": "combined-precipitation.csv",
-                    "name": "yearly-precipitation",
-                    "chart_id": "i3brJ",
-                    "dynamic": false,
-                    "columns": [
-                        "date",
-                        "2023"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-temperature.csv",
-                    "name": "fortnightly-temperature",
-                    "chart_id": "0M3e8",
-                    "dynamic": false,
-                    "columns": [
-                        "Location",
-                        "Last Week",
-                        "This Week",
-                        "Harvest Area"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-salinity.csv",
-                    "name": "fortnightly-salinity",
-                    "chart_id": "NQ3ve",
-                    "dynamic": false,
-                    "columns": [
-                        "Location",
-                        "Last Week",
-                        "This Week",
-                        "Harvest Area"
-                    ]
-                },
-                {
-                    "filepath": "weekly-precipitation.csv",
-                    "name": "weekly-precipitation",
-                    "chart_id": "4WakW",
-                    "dynamic": false,
-                    "columns": [
-                        "date",
-                        "precipitation"
-                    ]
-                },
-                {
-                    "filepath": "weekly-salinity-table.csv",
-                    "name": "weekly-salinity",
-                    "chart_id": "un8OQ",
-                    "dynamic": true,
-                    "columns": [
-                        "Location",
-                        "Harvest Area"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-salinity-chart.csv",
-                    "name": "fortnightly-salinity-chart",
-                    "chart_id": "gt27x",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Cromartys Bay",
-                        "Carrington Bay",
-                        "Lemon Tree Passage",
-                        "Oyster Cove"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-temperature-chart.csv",
-                    "name": "fortnightly-temperature-chart",
-                    "chart_id": "4PKdO",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Cromartys Bay",
-                        "Carrington Bay",
-                        "Lemon Tree Passage",
-                        "Oyster Cove"
-                    ]
-                },
-                {
-                    "filepath": "weekly-temperature-table.csv",
-                    "name": "weekly-temperature",
-                    "chart_id": "Cv7T6",
-                    "dynamic": true,
-                    "columns": [
-                        "Location",
-                        "Harvest Area"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-pikesxin.csv",
-                    "name": "fortnightly-pikesxin",
-                    "chart_id": "RHNgd",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Volume",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-booral.csv",
-                    "name": "fortnightly-booral",
-                    "chart_id": "eoCg7",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Volume",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "fortnightly-damsite.csv",
-                    "name": "fortnightly-damsite",
-                    "chart_id": "f6p83",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Volume",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "yearly-pikesxin.csv",
-                    "name": "yearly-pikesxin",
-                    "chart_id": "YhaTi",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "2023",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "yearly-booral.csv",
-                    "name": "yearly-booral",
-                    "chart_id": "V9N9H",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "2023",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "yearly-damsite.csv",
-                    "name": "yearly-damsite",
-                    "chart_id": "2034F",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "2023",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "weekly-salinity-extremes.csv",
-                    "name": "weekly-salinity-extremes",
-                    "chart_id": "cPiZ2",
-                    "dynamic": false,
-                    "columns": [
-                        "Site",
-                        "Minimum",
-                        "Maximum"
-                    ]
-                },
-                {
-                    "filepath": "weekly-temperature-extremes.csv",
-                    "name": "weekly-temperature-extremes",
-                    "chart_id": "L7zV4",
-                    "dynamic": false,
-                    "columns": [
-                        "Site",
-                        "Minimum",
-                        "Maximum"
-                    ]
-                }
-            ],
-            "water_nsw": {
-                "sites": [
-                    {
-                        "name": "pikesxin",
-                        "id": 209002
-                    },
-                    {
-                        "name": "booral",
-                        "id": 209003
-                    },
-                    {
-                        "name": "damsite",
-                        "id": 209018
                     }
                 ], 
                 "defaults": {
