@@ -50,11 +50,11 @@ def main():
         token = ""
         if site['name'].__contains__('Clyde River'):
             token = clyde_river_key
-        elif site['name'] == 'Port Stephens':
+        elif site['name'].__contains__('Port Stephens'):
             token = port_stephens_key
-        elif site['name'] == 'Wallis Lake':
+        elif site['name'].__contains__('Wallis Lake'):
             token = wallis_lakes_key
-        elif site['name'] == 'Manning River':
+        elif site['name'].__contains__('Manning River'):
             token = manning_river_key
         
         
