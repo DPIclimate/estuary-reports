@@ -164,28 +164,26 @@ def main():
 
 
     for site in config['sites']:
-        site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
         if site['name'] == 'Clyde River':
             # Generate a PDF report for each site.
-            for site in config['sites']:
-                site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
-                # Get current working directory
-                cwd = os.getcwd()
-                # Change working directory to the site_directory/report folder.
-                os.chdir(f"{site_directory}/report")
-                print("Generating PDF report, executing pdflatex.")
-                cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
-                proc = subprocess.Popen(cmd)
-                proc.communicate()
-                retcode = proc.returncode
-                if not retcode == 0:
-                    if os.path.exists(f'{site_directory}/report/report.pdf'):
-                        os.unlink(f'{site_directory}/report/report.pdf')
-                    raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
-                os.unlink(f'{site_directory}/report/report.tex')
-                os.unlink(f'{site_directory}/report/report.log')
-                # Change directory back to the original working directory.
-                os.chdir(cwd)
+            site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
+            # Get current working directory
+            cwd = os.getcwd()
+            # Change working directory to the site_directory/report folder.
+            os.chdir(f"{site_directory}/report")
+            print("Generating PDF report, executing pdflatex.")
+            cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
+            proc = subprocess.Popen(cmd)
+            proc.communicate()
+            retcode = proc.returncode
+            if not retcode == 0:
+                if os.path.exists(f'{site_directory}/report/report.pdf'):
+                    os.unlink(f'{site_directory}/report/report.pdf')
+                raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
+            os.unlink(f'{site_directory}/report/report.tex')
+            os.unlink(f'{site_directory}/report/report.log')
+            # Change directory back to the original working directory.
+            os.chdir(cwd)
 
 
 
