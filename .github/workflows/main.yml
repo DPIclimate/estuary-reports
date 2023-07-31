@@ -18,6 +18,9 @@ jobs:
       with:
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_CLYDE_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
+        envkey_PORT_STEPHENS_ORG_KEY: ${{ secrets.PORT_STEPHENS_ORG_KEY }}
+        envkey_WALLIS_LAKES_ORG_KEY: ${{ secrets.WALLIS_LAKES_ORG_KEY }}
+        envkey_MANNING_RIVER_ORG_KEY: ${{ secrets.MANNING_RIVER_ORG_KEY }}
     - run: |
         pwd
         ls -a

@@ -136,7 +136,7 @@ class DischargeRate:
         else:
             raise ValueError("Unknown time range specified. Append this range before re-running")
 
-        print(f"Time Strings: {int(datetime.fromtimestamp(start/1000).strftime('%Y%m%d%H%M%S'))}, {int(datetime.fromtimestamp(end/1000).strftime('%Y%m%d%H%M%S'))}")
+        #print(f"Time Strings: {int(datetime.fromtimestamp(start/1000).strftime('%Y%m%d%H%M%S'))}, {int(datetime.fromtimestamp(end/1000).strftime('%Y%m%d%H%M%S'))}")
 
         try:
             discharge_rates = cls.new(start/1000, end/1000, config)
