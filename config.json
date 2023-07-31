@@ -1,6 +1,621 @@
 {
     "sites": [
         {   
+            "directory": "wallis-lakes",
+            "name": "Wallis Lakes",
+            "devices": [
+                {
+                    "name": "Rolphs Lease",
+                    "location": "Long Island",
+                    "harvest_area": "Long Island",
+                    "buoy_number": "1"
+                },
+                {
+                    "name": "Tony's Point",
+                    "location": "Wallis Island",
+                    "harvest_area": "Wallis Island",
+                    "buoy_number": "2"
+                },
+                {
+                    "name": "Wallamba",
+                    "location": "Unknown",
+                    "harvest_area": "Unknown",
+                    "buoy_number": "3"
+                },
+                {
+                    "name": "Wreck Lease Bandicoot",
+                    "location": "Unknown",
+                    "harvest_area": "Unknown",
+                    "buoy_number": "4"
+                }
+            ],
+            "ubidots_aws_variable_ids": [
+                "64be27c07fedc1000c6517f4"
+            ],
+            "variables": [
+                "salinity", 
+                "temperature"
+            ],
+            "harvest_areas": [
+                "Long Island",
+                "Wallis Island"
+            ],
+            "water_temperature_variables": [
+                "64c755c97fedc1000c651864",
+                "64c7559c36a1c6000cb927b4",
+                "64c755f836a1c6000cb927b5",
+                "64be279236a1c6000cb92752"
+            ],
+            "historical_discharge_files": [
+                "historical-dischargerate.csv"
+            ],
+            "files": [
+                {
+                    "filepath": "combined-precipitation.csv",
+                    "name": "yearly-precipitation",
+                    "chart_id": "1ZObW",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "2023"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature.csv",
+                    "name": "fortnightly-temperature",
+                    "chart_id": "4ZLeH",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity.csv",
+                    "name": "fortnightly-salinity",
+                    "chart_id": "JKryM",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-precipitation.csv",
+                    "name": "weekly-precipitation",
+                    "chart_id": "jcgzA",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "precipitation"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-table.csv",
+                    "name": "weekly-salinity",
+                    "chart_id": "8BICE",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity-chart.csv",
+                    "name": "fortnightly-salinity-chart",
+                    "chart_id": "3rwrF",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Long Island",
+                        "Wallis Island"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature-chart.csv",
+                    "name": "fortnightly-temperature-chart",
+                    "chart_id": "y0ZQw",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Long Island",
+                        "Wallis Island"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-table.csv",
+                    "name": "weekly-temperature",
+                    "chart_id": "snbw9",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-extremes.csv",
+                    "name": "weekly-salinity-extremes",
+                    "chart_id": "2G71e",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-extremes.csv",
+                    "name": "weekly-temperature-extremes",
+                    "chart_id": "nLJnp",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-willina.csv",
+                    "name": "fortnightly-willina",
+                    "chart_id": "Wh1S8",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-willina.csv",
+                    "name": "yearly-willina",
+                    "chart_id": "E05wR",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                }
+            ],
+            "water_nsw": {
+                "sites": [
+                    {
+                        "name": "willina",
+                        "id": 209006
+                    }
+                ], 
+                "defaults": {
+                    "params": {
+                        "varfrom": 100.00,
+                        "interval": "day",
+                        "varto": 141.00,
+                        "datasource": "CP",
+                        "data_type": "mean",
+                        "multiplier": 1
+                    },
+                    "function": "get_ts_traces",
+                    "version": 2
+                }
+            }
+        },
+        {   
+            "directory": "manning-river",
+            "name": "Manning River",
+            "devices": [
+                {
+                    "name": "Croki",
+                    "location": "Mitchells Island",
+                    "harvest_area": "Mitchells Island",
+                    "buoy_number": "1"
+                },
+                {
+                    "name": "Farquhar",
+                    "location": "South Channel",
+                    "harvest_area": "South Channel",
+                    "buoy_number": "2"
+                },
+                {
+                    "name": "Manning Point",
+                    "location": "Pelican Point",
+                    "harvest_area": "Pelican Point",
+                    "buoy_number": "3"
+                },
+                {
+                    "name": "Pelican Bay",
+                    "location": "Pelican Point",
+                    "harvest_area": "Pelican Point",
+                    "buoy_number": "4"
+                }
+            ],
+            "ubidots_aws_variable_ids": [
+                "64bf29a736a1c6000cb92767"
+            ],
+            "variables": [
+                "salinity", 
+                "temperature"
+            ],
+            "harvest_areas": [
+                "Mitchells Island",
+                "Pelican Point",
+                "South Channel"
+            ],
+            "water_temperature_variables": [
+                "64c7415236a1c6000cb927b1",
+                "64c7419736a1c6000cb927b2",
+                "64bf29687fedc1000c651808",
+                "64c741dbfe7bed000b6cd01b"
+            ],
+            "historical_discharge_files": [
+                "historical-dischargerate.csv"
+            ],
+            "files": [
+                {
+                    "filepath": "combined-precipitation.csv",
+                    "name": "yearly-precipitation",
+                    "chart_id": "uygV1",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "2023"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature.csv",
+                    "name": "fortnightly-temperature",
+                    "chart_id": "Ftijw",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity.csv",
+                    "name": "fortnightly-salinity",
+                    "chart_id": "pym5B",
+                    "dynamic": false,
+                    "columns": [
+                        "Location",
+                        "Last Week",
+                        "This Week",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-precipitation.csv",
+                    "name": "weekly-precipitation",
+                    "chart_id": "jAdS5",
+                    "dynamic": false,
+                    "columns": [
+                        "date",
+                        "precipitation"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-table.csv",
+                    "name": "weekly-salinity",
+                    "chart_id": "HdJVe",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-salinity-chart.csv",
+                    "name": "fortnightly-salinity-chart",
+                    "chart_id": "TTzON",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Mitchells Island",
+                        "Pelican Point",
+                        "South Channel"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-temperature-chart.csv",
+                    "name": "fortnightly-temperature-chart",
+                    "chart_id": "ke6xo",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Mitchells Island",
+                        "Pelican Point",
+                        "South Channel"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-table.csv",
+                    "name": "weekly-temperature",
+                    "chart_id": "MWW6U",
+                    "dynamic": true,
+                    "columns": [
+                        "Location",
+                        "Harvest Area"
+                    ]
+                },
+                {
+                    "filepath": "weekly-salinity-extremes.csv",
+                    "name": "weekly-salinity-extremes",
+                    "chart_id": "4A7NW",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "weekly-temperature-extremes.csv",
+                    "name": "weekly-temperature-extremes",
+                    "chart_id": "bo6hh",
+                    "dynamic": false,
+                    "columns": [
+                        "Site",
+                        "Minimum",
+                        "Maximum"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-killawarra.csv",
+                    "name": "fortnightly-killawarra",
+                    "chart_id": "ViJwI",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-killawarra.csv",
+                    "name": "yearly-killawarra",
+                    "chart_id": "Fp6rX",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-barrington-rocky.csv",
+                    "name": "fortnightly-barrington-rocky",
+                    "chart_id": "tHisd",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-barrington-rocky.csv",
+                    "name": "yearly-barrington-rocky",
+                    "chart_id": "1fAQb",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-nowendoc.csv",
+                    "name": "fortnightly-nowendoc",
+                    "chart_id": "8XUfG",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-nowendoc.csv",
+                    "name": "yearly-nowendoc",
+                    "chart_id": "pNiis",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-landsdn.csv",
+                    "name": "fortnightly-landsdn",
+                    "chart_id": "4LBo4",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-landsdn.csv",
+                    "name": "yearly-landsdn",
+                    "chart_id": "ebShQ",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-munyaree.csv",
+                    "name": "fortnightly-munyaree",
+                    "chart_id": "rj6q2",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-munyaree.csv",
+                    "name": "yearly-munyaree",
+                    "chart_id": "R02EY",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-gloucestr.csv",
+                    "name": "fortnightly-gloucestr",
+                    "chart_id": "o6Z7k",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-gloucestr.csv",
+                    "name": "yearly-gloucestr",
+                    "chart_id": "Ezndv",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-lesliesbr.csv",
+                    "name": "fortnightly-lesliesbr",
+                    "chart_id": "TZffH",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-lesliesbr.csv",
+                    "name": "yearly-lesliesbr",
+                    "chart_id": "vPBkr",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-wingham.csv",
+                    "name": "fortnightly-wingham",
+                    "chart_id": "MInLc",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-wingham.csv",
+                    "name": "yearly-wingham",
+                    "chart_id": "vl5ko",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "fortnightly-tareewest.csv",
+                    "name": "fortnightly-tareewest",
+                    "chart_id": "OSHMm",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-tareewest.csv",
+                    "name": "yearly-tareewest",
+                    "chart_id": "Bp0gQ",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                }
+            ],
+            "water_nsw": {
+                "sites": [
+                    {
+                        "name": "killawarra",
+                        "id": 208004
+                    },
+                    {
+                        "name": "barrington-rocky",
+                        "id": 208006
+                    },
+                    {
+                        "name": "nowendoc",
+                        "id": 208007
+                    },
+                    {
+                        "name": "landsdn",
+                        "id": 208015
+                    },
+                    {
+                        "name": "munyaree",
+                        "id": 208019
+                    },
+                    {
+                        "name": "gloucestr",
+                        "id": 208020
+                    },
+                    {
+                        "name": "lesliesbr",
+                        "id": 208029
+                    },
+                    {
+                        "name": "wingham",
+                        "id": 208400
+                    },
+                    {
+                        "name": "tareewest",
+                        "id": 208420
+                    }
+                ], 
+                "defaults": {
+                    "params": {
+                        "varfrom": 100.00,
+                        "interval": "day",
+                        "varto": 141.00,
+                        "datasource": "CP",
+                        "data_type": "mean",
+                        "multiplier": 1
+                    },
+                    "function": "get_ts_traces",
+                    "version": 2
+                }
+            }
+        },
+        {   
             "directory": "port-stephens",
             "name": "Port Stephens",
             "devices": [

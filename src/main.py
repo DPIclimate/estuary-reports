@@ -45,6 +45,7 @@ def main():
 
     # For all sites in config, create folder for each using directory
     for site in config['sites']:
+
         site_config = utils.Config.from_site(site)
 
         token = ""
@@ -172,19 +173,20 @@ def main():
             # Change working directory to the site_directory/report folder.
             os.chdir(f"{site_directory}/report")
             print("Generating PDF report, executing pdflatex.")
-            cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
-            proc = subprocess.Popen(cmd)
-            proc.communicate()
-            retcode = proc.returncode
-            if not retcode == 0:
-                if os.path.exists(f'{site_directory}/report/report.pdf'):
-                    os.unlink(f'{site_directory}/report/report.pdf')
-                raise ValueError('Error {} executing command: {}'.format(retcode, ' '.join(cmd))) 
-            os.unlink(f'{site_directory}/report/report.tex')
-            os.unlink(f'{site_directory}/report/report.log')
-            # Change directory back to the original working directory.
+            try:
+                cmd = ['pdflatex', '-interaction', 'nonstopmode', '-halt-on-error', 'report.tex']
+                proc = subprocess.Popen(cmd)
+                proc.communicate()
+                retcode = proc.returncode
+                if retcode != 0:
+                    if os.path.exists(f'{site_directory}/report/report.pdf'):
+                        os.unlink(f'{site_directory}/report/report.pdf')
+                    raise ValueError(f'pdflatex process failed with return code {retcode}')
+                os.unlink(f'{site_directory}/report/report.tex')
+                os.unlink(f'{site_directory}/report/report.log')
+            except Exception as e:
+                print(e)
             os.chdir(cwd)
-
 
 
 if __name__ == '__main__':
