@@ -452,28 +452,6 @@
                     ]
                 },
                 {
-                    "filepath": "fortnightly-munyaree.csv",
-                    "name": "fortnightly-munyaree",
-                    "chart_id": "rj6q2",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Volume",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "yearly-munyaree.csv",
-                    "name": "yearly-munyaree",
-                    "chart_id": "R02EY",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "2023",
-                        "Quality"
-                    ]
-                },
-                {
                     "filepath": "fortnightly-gloucestr.csv",
                     "name": "fortnightly-gloucestr",
                     "chart_id": "o6Z7k",
@@ -538,28 +516,6 @@
                         "2023",
                         "Quality"
                     ]
-                },
-                {
-                    "filepath": "fortnightly-tareewest.csv",
-                    "name": "fortnightly-tareewest",
-                    "chart_id": "OSHMm",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "Volume",
-                        "Quality"
-                    ]
-                },
-                {
-                    "filepath": "yearly-tareewest.csv",
-                    "name": "yearly-tareewest",
-                    "chart_id": "Bp0gQ",
-                    "dynamic": false,
-                    "columns": [
-                        "Date",
-                        "2023",
-                        "Quality"
-                    ]
                 }
             ],
             "water_nsw": {
@@ -581,10 +537,6 @@
                         "id": 208015
                     },
                     {
-                        "name": "munyaree",
-                        "id": 208019
-                    },
-                    {
                         "name": "gloucestr",
                         "id": 208020
                     },
@@ -595,10 +547,6 @@
                     {
                         "name": "wingham",
                         "id": 208400
-                    },
-                    {
-                        "name": "tareewest",
-                        "id": 208420
                     }
                 ], 
                 "defaults": {
