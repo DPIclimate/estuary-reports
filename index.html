@@ -19,26 +19,10 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.1/chartjs-plugin-zoom.min.js" integrity="sha512-klQv6lz2YR+MecyFYMFRuU2eAl8IPRo6zHnsc9n142TJuJHS8CG0ix4Oq9na9ceeg1u5EkBfZsFcV3U7J51iew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js" integrity="sha512-HrwQrg8S/xLPE6Qwe7XOghA/FOxX+tuVF4TxbvS73/zKJSs/b1gVl/P4MsdfTFWYFYg/ISVNYIINcg35Xvr6QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script type="text/javascript">
-			var salinityPlay = false;
-			var timer;
-			var temp_timer;
-			var i = 0;
-			var temp_i = 0;
-			var salinity_urls = [];
-			var temp_urls = [];
-			for (let i = 0; i < 25; i++) {
-				var surl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/"+ i + ".png";
-				var turl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/"+ i + ".png";
-				salinity_urls.push(surl);
-				temp_urls.push(turl);
-			}
-			createValuesTable();
-		</script>
 	</head>
 	<body>
 
-		<div class="header" style="margin-top: 1%; margin-bottom: -2%;">
+		<div class="header" style="margin-top: 1%; margin-bottom: 1%;">
 			<img src="assets/DPI_logo.png" class="dpi-logo"/>
 			<div>
 				<h1>FarmDecisionTECH</h1>
@@ -46,7 +30,28 @@
 			</div>
 		</div>
 
-		<div class="main-content">
+		<div class="main-content" style="display: flex; flex-direction: column; justify-content: center;	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #fff; padding: 1rem; margin: 1rem;">
+
+			<table class="fieldwork-table">
+				<tr>
+					<th>Date</th>
+					<th>Activity</th>
+					<th>Notes</th>
+				</tr>
+				<tr class="maintainance-row">
+					<td>TBD June 2023</td>
+					<td>Maintainance</td>
+					<td>The FarmDecsionTECH team will be conducting maintainance on the buoys and weather station.</td>
+				</tr>
+			</table>
+			<br>
+			<hr width="100%">
+			<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: left;"> 
+				<a href="mailto: mal.kul@dpi.nsw.gov.au?subject=Report Inquiry" target="_blank" 
+				   style="color: #002664; background: #fff; padding: 0.5rem; margin-top: 0.8rem;
+				   border: 1px solid #002664; text-decoration: none;">Report an Issue</a>
+		   </div>
+
 			<div class="estuaries-table" style="display: flex; flex-direction: column; justify-content: center;	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); background-color: #fff; padding: 1rem; margin: 1rem;">
 				<h2>Estuaries</h2>
 				<div class="estuaries-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -68,31 +73,12 @@
 					</a>
 				  </div>
 				<br>
-				<hr width="100%">
-				<br>
-				<table class="fieldwork-table">
-					<tr>
-						<th>Date</th>
-						<th>Activity</th>
-						<th>Notes</th>
-					</tr>
-					<tr class="maintainance-row">
-						<td>TBD June 2023</td>
-						<td>Maintainance</td>
-						<td>The FarmDecsionTECH team will be conducting maintainance on the buoys and weather station.</td>
-					</tr>
-				</table>
-				<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: left;"> 
- 					<a href="mailto: mal.kul@dpi.nsw.gov.au?subject=Report Inquiry" target="_blank" 
-						style="color: #002664; background: #fff; padding: 0.5rem; margin-top: 0.8rem;
-						border: 1px solid #002664; text-decoration: none;">Report an Issue</a>
-				</div>
 			</div>
 
 			<style>
 				/* Media query for screens smaller than 768px */
 				@media (max-width: 767px) {
-					.estuaries-container {
+					.main-content {
 						flex-direction: column;
 						align-items: center;
 					}
@@ -102,8 +88,8 @@
 					}
 				}
 				@media (max-width: 715px) {
-					.estuaries-table {
-						margin-top: 100px !important;
+					.main-content {
+						margin-top: 150px !important;
 					}
 					.estuaries-container {
 						display: flex !important;
