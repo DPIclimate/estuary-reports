@@ -23,11 +23,10 @@ async function createValuesTable() {
 
 	const temperature_data = {
 		ids: [
-			"",
-			"",
-			"",
-			"",
-			""
+			"64c755c97fedc1000c651864",
+			"64c7559c36a1c6000cb927b4",
+			"64c755f836a1c6000cb927b5",
+			"64be279236a1c6000cb92752"
 		]
 	};
 
@@ -115,17 +114,10 @@ async function createValuesTable() {
 
 	const salinity_data = {
 		ids: [
-			"620c34a036478d1df15fcd01",
-			"6181b4e0a73c34080beda0d7",
-			"61788ec4a73c3402b041fb61",
-			"61788eb8a73c34027320e15e",
-			"6174a4cc852f09011427403b",
-			"61732bf6852f09000d3d1bff",
-			"617318d0dc9170000d0c6bbc",
-			"6171f4d5810cbd25005c19e4",
-			"616e4a8741ac9d039cfa39f8",
-			"616e493c810cbd03d916fa68",
-			"616e476d41ac9d03d99b67ec"
+			"64c755c17fedc1000c651863",
+			"64c75596fe7bed000b6cd01c",
+			"64c755f3fe7bed000b6cd01d",
+			"64be278a7fedc1000c6517f3"
 		]
 	}
 
