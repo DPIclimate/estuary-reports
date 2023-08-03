@@ -124,7 +124,7 @@ def historical_temperature_datasets(site_directory) -> None:
 
     for method in agg:
         files = [
-            f"{site_directory}/2022-temperature-{method}.csv",
+            f"{site_directory}/{datetime.now().year}-temperature-{method}.csv",
             f"{site_directory}/historical-temperature-{method}.csv",
         ]
 

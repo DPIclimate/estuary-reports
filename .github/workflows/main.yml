@@ -4,11 +4,12 @@ on:
   schedule:
     - cron: "0 23,17,11,5 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings).
   workflow_dispatch: 
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: bsefton/docker-estuary_reports_ubuntu_python:latest
+    container: bsefton/estuary_reports_ubuntu_python:latest
     steps:
     - name: Python Clone & Run
       uses: actions/checkout@v2
@@ -17,6 +18,9 @@ jobs:
       with:
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_CLYDE_ORG_KEY: ${{ secrets.CLYDE_ORG_KEY }}
+        envkey_PORT_STEPHENS_ORG_KEY: ${{ secrets.PORT_STEPHENS_ORG_KEY }}
+        envkey_WALLIS_LAKES_ORG_KEY: ${{ secrets.WALLIS_LAKES_ORG_KEY }}
+        envkey_MANNING_RIVER_ORG_KEY: ${{ secrets.MANNING_RIVER_ORG_KEY }}
     - run: |
         pwd
         ls -a
@@ -28,8 +32,3 @@ jobs:
       with:
         name: report.pdf 
         path: src/output/clyde/report/report.pdf
-    - name: Deploy GH Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.7
-      with:
-        branch: gh-pages # The branch the action should deploy to.
-        folder: src/output/clyde/report # The folder the action should deploy.
