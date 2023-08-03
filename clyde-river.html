@@ -38,9 +38,9 @@
 	</head>
 	<body>
 
-		<div class="header" style="margin-top: 1%; margin-bottom: -2%;">
+		<div class="header" style="margin-top: 1%;">
 			<a href="https://dpiclimate.github.io/estuary-reports/">
-				<img src="assets/DPI_logo.png" class="dpi-logo" style="max-height: 7rem"/>
+				<img src="assets/DPI_logo.png" class="dpi-logo" style="max-height: 6rem"/>
 			</a>
 			<div>
 				<h1>FarmDecisionTECH</h1>
@@ -330,6 +330,21 @@
 				</div>
 
 			</div>
+
+			<style>
+				/* Media query for screens smaller than 800px & 713px */
+				@media (max-width: 800px) {
+					.main-content {
+						flex-direction: column;
+						align-items: center;
+					}
+				}
+				@media (max-width: 713px) {
+					.main-content {
+						margin-top: 150px !important;
+					}
+				}
+			  </style>
 
 			<h3 class="funding-source">This work has been produced by the NSW Primary Industries Climate Change Research Strategy funded by the NSW Climate Change Fund.</h3>
 			<h4 class="funding-source">This data is released by NSW Department of Primary Industries for evaluation purposes only and should not be relied upon for business decisions, carrying out risk assessments or other uses. Please provide feedback and questions to <a href="mailto: ben.sefton@dpi.nsw.gov.au">ben.sefton@dpi.nsw.gov.au</a></h4>
