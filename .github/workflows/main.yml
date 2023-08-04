@@ -32,3 +32,11 @@ jobs:
       with:
         name: report.pdf 
         path: src/output/clyde/report/report.pdf
+    - name: Commit PDF Report
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: "Ben Sefton"
+        author_email: "ben.sefton@dpi.nsw.gov.au"
+        message: "Add Clyde River PDF report"
+        add: "src/output/clyde/report/report.pdf"
+        push: "true"
