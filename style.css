@@ -208,8 +208,20 @@ input ~ .tab { display: none; }
 }
 
 input ~ .tab { display: none; }
-#tab1-flow:checked ~ .tab.weekly-view-flow,
-#tab2-flow:checked ~ .tab.yearly-view-flow { display: block; }
+#tab1-flow:checked ~ .tab.weekly1-view-flow,
+#tab2-flow:checked ~ .tab.yearly1-view-flow,
+#tab3-flow:checked ~ .tab.weekly2-view-flow,
+#tab4-flow:checked ~ .tab.yearly2-view-flow,
+#tab5-flow:checked ~ .tab.weekly3-view-flow,
+#tab6-flow:checked ~ .tab.yearly3-view-flow,
+#tab7-flow:checked ~ .tab.weekly4-view-flow,
+#tab8-flow:checked ~ .tab.yearly4-view-flow,
+#tab9-flow:checked ~ .tab.weekly5-view-flow,
+#tab10-flow:checked ~ .tab.yearly5-view-flow,
+#tab11-flow:checked ~ .tab.weekly6-view-flow,
+#tab12-flow:checked ~ .tab.yearly6-view-flow {
+  display: block;
+}
 
 .fieldwork-table {
 	flex: 46%;
