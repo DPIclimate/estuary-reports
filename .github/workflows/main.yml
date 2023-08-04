@@ -32,6 +32,10 @@ jobs:
       with:
         name: report.pdf 
         path: src/output/clyde/report/report.pdf
+    - name: Configure Git
+      run: |
+        git config --global --add safe.directory /__w/estuary-reports/estuary-reports
+      shell: bash
     - name: Commit PDF Report
       uses: EndBug/add-and-commit@v7
       with:
