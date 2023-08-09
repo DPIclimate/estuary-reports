@@ -264,6 +264,10 @@ input ~ .tab { display: none; }
 	background-color: #a8e0b7;
 }
 
+.warning-row {
+	background-color: #f0901a;
+}
+
 .air-humid-container {
 	width: 100%;
 	display: flex;
