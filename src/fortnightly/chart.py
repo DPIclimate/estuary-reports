@@ -49,12 +49,17 @@ class Chart:
         # Get a unique list of all harvest areas
         harvest_area_names = np.unique([dev["harvest_area"] for dev in config["devices"]])
 
+        #print(f"Harvest Areas: {harvest_area_names}")
+
+        #print(f"Variable List: {variable_list.__dict__}")
+
         # Create a harvest area object for each harvest area
         for harvest_area_name in harvest_area_names:
             harvest_area = Chart.HarvestArea(variables=[], name=harvest_area_name)
             for id, device, ha in variable_list:
                 if ha == harvest_area_name:
                     harvest_area.variables.append(id)
+                    #print(f"ha: {ha}, harvest_area_name: {harvest_area_name}, device: {device}")
             harvest_area_variables.harvest_areas.append(harvest_area)
 
         start, end = utils.two_weeks()
@@ -107,7 +112,12 @@ class Chart:
     def to_csv(self, filename: str):
         with open(filename, mode='a', newline='') as file:
             writer = csv.writer(file)
+            harvest_areas = np.unique([ha for date, values in self.data.items() for ha in values.keys()])
+            #print(f"harvest_areas: {harvest_areas}")
+            #print(f"to_csv: {self}")
+            # Leaving harvest_areas in, may be needed to replace headers.
             for date, values in self.data.items():
+                #print(f"date: {date}, values: {values}")
                 row = [date]
                 for harvest_area, value in values.items():
                     row.append(str(value))

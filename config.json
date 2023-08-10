@@ -112,6 +112,7 @@
                     "columns": [
                         "Date",
                         "Long Island",
+                        "Unknown",
                         "Wallis Island"
                     ]
                 },
@@ -123,6 +124,7 @@
                     "columns": [
                         "Date",
                         "Long Island",
+                        "Unknown",
                         "Wallis Island"
                     ]
                 },
@@ -580,7 +582,7 @@
                     "buoy_number": "2"
                 },
                 {
-                    "name": "North Arm Cove",
+                    "name": "Bundabah",
                     "location": "Bundabah",
                     "harvest_area": "Bundabah",
                     "buoy_number": "3"
@@ -606,11 +608,11 @@
                 "temperature"
             ],
             "harvest_areas": [
-                "Cromartys Bay",
+                "Bundabah",
                 "Carrington Bay",
+                "Cromartys Bay",
                 "Lemon Tree Passage",
-                "Oyster Cove",
-                "Bundabah"
+                "Oyster Cove"              
             ],
             "water_temperature_variables": [
                 "64be1ae67fedc1000c6517f0",
@@ -685,11 +687,11 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "Cromartys Bay",
+                        "Bundabah",
                         "Carrington Bay",
+                        "Cromartys Bay",
                         "Lemon Tree Passage",
-                        "Oyster Cove",
-                        "Bundabah"
+                        "Oyster Cove"
                     ]
                 },
                 {
@@ -699,11 +701,11 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "Cromartys Bay",
+                        "Bundabah",
                         "Carrington Bay",
+                        "Cromartys Bay",
                         "Lemon Tree Passage",
-                        "Oyster Cove",
-                        "Bundabah"
+                        "Oyster Cove"
                     ]
                 },
                 {
