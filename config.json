@@ -51,7 +51,7 @@
             ],
             "files": [
                 {
-                    "filepath": "combined-precipitation.csv",
+                    "filepath": "yearly-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "1ZObW",
                     "dynamic": false,
@@ -256,7 +256,7 @@
             ],
             "files": [
                 {
-                    "filepath": "combined-precipitation.csv",
+                    "filepath": "yearly-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "uygV1",
                     "dynamic": false,
@@ -627,7 +627,7 @@
             ],
             "files": [
                 {
-                    "filepath": "combined-precipitation.csv",
+                    "filepath": "yearly-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "i3brJ",
                     "dynamic": false,
