@@ -2,7 +2,7 @@ from ubidots.device.variables import VariablesList
 import ubidots.device.data as ubidotsdata
 from datetime import datetime, timedelta
 import util as utils
-import logging
+import logging, time
 import json
 import csv
 import requests
@@ -101,6 +101,7 @@ class DischargeRate:
                     break
                 except Exception as e:
                     logging.error(f"Error: {e} when getting data for {site['name']}. Retrying...")
+                    time.sleep(5)
 
         return discharge_rate_vec
 

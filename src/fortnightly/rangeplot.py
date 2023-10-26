@@ -89,17 +89,18 @@ class RangePlot:
         with open(filename, "a", newline="") as file:
             writer = csv.writer(file)
             for row in self.range_values:
-                if 0.0 < row.this_week['value'] < 40.0 and 0.0 < row.last_week['value'] < 40.0:
-                    writer.writerow([
-                        row.location,
-                        str(row.last_week['value']),
-                        str(row.this_week['value']),
-                        row.harvest_area,
-                    ])
-                else:
-                    writer.writerow([
-                        row.location,
-                        "",
-                        "",
-                        row.harvest_area,
-                    ])
+                if row.this_week['value'] is not None and row.last_week['value'] is not None:
+                    if 0.0 < row.this_week['value'] < 40.0 and 0.0 < row.last_week['value'] < 40.0:
+                        writer.writerow([
+                            row.location,
+                            str(row.last_week['value']),
+                            str(row.this_week['value']),
+                            row.harvest_area,
+                        ])
+                    else:
+                        writer.writerow([
+                            row.location,
+                            "",
+                            "",
+                            row.harvest_area,
+                        ])
