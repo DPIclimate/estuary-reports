@@ -1,4 +1,4 @@
-import csv
+import csv, os
 from datetime import datetime
 from typing import List, Optional, Tuple
 import ubidots.device.aws as ubidotsaws
@@ -97,22 +97,25 @@ def join_precipitation_datasets(site_directory) -> None:
     print("Joining precipitation datasets")
 
     files = [
+        f"{site_directory}/yearly-precipitation.csv",
         f"{site_directory}/2020-precipitation.csv",
         f"{site_directory}/2021-precipitation.csv",
         f"{site_directory}/2022-precipitation.csv",
-        f"{site_directory}/yearly-precipitation.csv",
     ]
 
     df = pd.DataFrame()
 
     init = True
     for file in files:
-        tmp_df = pd.read_csv(file)
-        if init:
-            df = tmp_df.copy()
-            init = False
+        if not os.path.exists(file):
+            continue
         else:
-            df = pd.merge(df, tmp_df, on="date", how="outer")
+            tmp_df = pd.read_csv(file)
+            if init:
+                df = tmp_df.copy()
+                init = False
+            else:
+                df = pd.merge(df, tmp_df, on="date", how="outer")
 
     df.to_csv(f"{site_directory}/combined-precipitation.csv", index=False)
 
