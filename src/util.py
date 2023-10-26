@@ -129,7 +129,8 @@ class WaterNswSite:
     """
     Water NSW site information from `config.json`.
     """
-    def __init__(self, name: str, id: str):
+    def __init__(self, nice_name: str, name: str, id: str):
+        self.nice_name = nice_name
         self.name = name
         self.id = id
 

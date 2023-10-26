@@ -8,6 +8,7 @@ import csv
 import requests
 from typing import List
 from datetime import datetime
+import pandas as pd
 
 logger = logging.basicConfig(level=logging.INFO)
 
@@ -59,6 +60,8 @@ class DischargeRate:
 
         print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {int(datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S'))} to {int(datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S'))}")
 
+        max_retries = 3
+
         discharge_rate_vec = []
 
         for site in config['sites']:
@@ -91,9 +94,13 @@ class DischargeRate:
                 "User-Agent": USER_AGENT
             }
 
-            res = requests.get(url, headers=headers).json()
-
-            discharge_rate_vec.append(cls(error_num=res['error_num'], return_field=res['return']))
+            for _ in range(max_retries):
+                try:
+                    res = requests.get(url, headers=headers).json()
+                    discharge_rate_vec.append(cls(error_num=res['error_num'], return_field=res['return']))
+                    break
+                except Exception as e:
+                    logging.error(f"Error: {e} when getting data for {site['name']}. Retrying...")
 
         return discharge_rate_vec
 
@@ -148,3 +155,28 @@ class DischargeRate:
                 site.to_csv(time_range, filename)
         except Exception as e:
             logging.error(f"There was an error: {e}")
+
+
+def join_flow_datasets(time_range, site_directory, config):
+    if len(config["sites"]) > 1:
+        logging.info(f"Joining WaterNSW {time_range} discharge datasets.")
+        init = True
+        current_year = f"{int(datetime.now().strftime('%Y'))}"
+        
+        for site in config["sites"]:
+            if init:
+                df = pd.read_csv(f"{site_directory}/{time_range}-{site['name']}.csv")
+                df = df[["Date", current_year]]
+                df = df.rename(columns={current_year: site["nice_name"]})
+                df.to_csv(f"{site_directory}/{time_range}-combined-discharge.csv", index=False)
+                init = False
+            else:
+                combined_df = pd.read_csv(f"{site_directory}/{time_range}-combined-discharge.csv")
+                df2 = pd.read_csv(f"{site_directory}/{time_range}-{site['name']}.csv")
+                df2 = df2[["Date", current_year]]
+                df2 = df2.rename(columns={current_year: site["nice_name"]})
+                combined_df = pd.merge(combined_df, df2, on="Date", how="outer")
+                combined_df.to_csv(f"{site_directory}/{time_range}-combined-discharge.csv", index=False)
+    else:
+        logging.info("Skipping join of WaterNSW discharge datasets. Only 1 site specified.")
+

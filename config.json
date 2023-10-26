@@ -186,6 +186,7 @@
             "water_nsw": {
                 "sites": [
                     {
+                        "nice_name": "Wang Wauk River Willina",
                         "name": "willina",
                         "id": 209006
                     }
@@ -432,6 +433,28 @@
                     ]
                 },
                 {
+                    "filepath": "fortnightly-barry.csv",
+                    "name": "fortnightly-barry",
+                    "chart_id": "5jmMS",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-barry.csv",
+                    "name": "yearly-barry",
+                    "chart_id": "vAmMg",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
+                },
+                {
                     "filepath": "fortnightly-landsdn.csv",
                     "name": "fortnightly-landsdn",
                     "chart_id": "4LBo4",
@@ -518,37 +541,76 @@
                         "2023",
                         "Quality"
                     ]
+                },
+                {
+                    "filepath": "fortnightly-tareewest.csv",
+                    "name": "fortnightly-tareewest",
+                    "chart_id": "OSHMm",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "Volume",
+                        "Quality"
+                    ]
+                },
+                {
+                    "filepath": "yearly-tareewest.csv",
+                    "name": "yearly-tareewest",
+                    "chart_id": "Bp0gQ",
+                    "dynamic": false,
+                    "columns": [
+                        "Date",
+                        "2023",
+                        "Quality"
+                    ]
                 }
             ],
             "water_nsw": {
                 "sites": [
                     {
+                        "nice_name": "Killawarra",
                         "name": "killawarra",
                         "id": 208004
                     },
                     {
+                        "nice_name": "Barrington River Rocky Crossing",
                         "name": "barrington-rocky",
                         "id": 208006
                     },
                     {
+                        "nice_name": "Nowendoc River",
                         "name": "nowendoc",
                         "id": 208007
                     },
                     {
+                        "nice_name": "Barnard River Barry",
+                        "name": "barry",
+                        "id": 208009
+                    },
+                    {
+                        "nice_name": "Landsdowne River",
                         "name": "landsdn",
                         "id": 208015
                     },
                     {
+                        "nice_name": "Gloucester River",
                         "name": "gloucestr",
                         "id": 208020
                     },
                     {
+                        "nice_name": "Leslies Bridge",
                         "name": "lesliesbr",
                         "id": 208029
                     },
                     {
+                        "nice_name": "Wingham",
                         "name": "wingham",
                         "id": 208400
+                    },
+                    {
+                        "nice_name": "Taree West",
+                        "name": "tareewest",
+                        "id": 208420
                     }
                 ], 
                 "defaults": {
@@ -810,14 +872,17 @@
             "water_nsw": {
                 "sites": [
                     {
+                        "nice_name": "Mammy Johnsons River Pikes Crossing",
                         "name": "pikesxin",
                         "id": 209002
                     },
                     {
+                        "nice_name": "Karuah River Booral",
                         "name": "booral",
                         "id": 209003
                     },
                     {
+                        "nice_name": "Karuah River Dam Site",
                         "name": "damsite",
                         "id": 209018
                     }
@@ -1124,10 +1189,12 @@
             "water_nsw": {
                 "sites": [
                     {
+                        "nice_name": "Brooman",
                         "name": "brooman",
                         "id": 216002
                     },
                     {
+                        "nice_name": "Buckenbowra",
                         "name": "buckenbowra",
                         "id": 216009
                     }
