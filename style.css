@@ -208,6 +208,7 @@ input ~ .tab { display: none; }
 }
 
 input ~ .tab { display: none; }
+#tab0-flow:checked ~ .tab.yearly-view-flow,
 #tab1-flow:checked ~ .tab.weekly1-view-flow,
 #tab2-flow:checked ~ .tab.yearly1-view-flow,
 #tab3-flow:checked ~ .tab.weekly2-view-flow,
