@@ -26,17 +26,23 @@ overwrite_csvs = True
 
 def main():
     load_dotenv()
+    working_directory = os.getenv('WORKING_DIRECTORY')
     dw_key = os.getenv('DW_KEY')
     clyde_river_key = os.getenv('CLYDE_ORG_KEY')
     port_stephens_key = os.getenv('PORT_STEPHENS_ORG_KEY')
     wallis_lakes_key = os.getenv('WALLIS_LAKES_ORG_KEY')
     manning_river_key = os.getenv('MANNING_RIVER_ORG_KEY')
     use_cache = False
-
+    start_dir = os.getcwd()
     cwd = os.getcwd()
-    if cwd.split('/')[-1] != 'src':
-        logging.error("Please run from src directory")
+    if working_directory is None:
+        logging.error("Working directory not set, exiting.")
+        logging.error("Please set the WORKING_DIRECTORY environment variable and make sure to include the /src/ folder at the end of it.")
         sys.exit(1)
+
+    if cwd != working_directory:
+        logging.info(f"Changing working directory to {working_directory}")
+        os.chdir(working_directory)
 
     config_path = os.path.join(os.getcwd(), "../config.json")
     # load config as json
@@ -141,7 +147,7 @@ def main():
         # Join yearlyndischarge dataset files. (This only joins 1 tributarys data for the current year with previous year/s historical data.)
         if site['name'] == 'Clyde River':
             yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
-            
+
         # Join all tributaries discharge datasets for the current year into 1 data frame.
         waternswflow.join_flow_datasets("yearly", site_directory, site['water_nsw'])
 
@@ -191,6 +197,12 @@ def main():
             except Exception as e:
                 print(e)
             os.chdir(cwd)
+
+
+    # End of process, change back to original working directory if changed.
+    if start_dir != working_directory:
+        logging.info("Changing back to original user directory.")
+        os.chdir(start_dir)
 
 
 if __name__ == '__main__':
