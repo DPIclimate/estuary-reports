@@ -220,7 +220,9 @@ input ~ .tab { display: none; }
 #tab9-flow:checked ~ .tab.weekly5-view-flow,
 #tab10-flow:checked ~ .tab.yearly5-view-flow,
 #tab11-flow:checked ~ .tab.weekly6-view-flow,
-#tab12-flow:checked ~ .tab.yearly6-view-flow {
+#tab12-flow:checked ~ .tab.yearly6-view-flow,
+#tab13-flow:checked ~ .tab.weekly7-view-flow,
+#tab14-flow:checked ~ .tab.yearly7-view-flow {
   display: block;
 }
 
