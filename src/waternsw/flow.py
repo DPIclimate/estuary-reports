@@ -58,7 +58,7 @@ class DischargeRate:
     @classmethod
     def new(cls, start, end, config) -> List['DischargeRate']:
 
-        print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {int(datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S'))} to {int(datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S'))}")
+        print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S')} to {datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S')}")
 
         max_retries = 5
 
@@ -107,7 +107,7 @@ class DischargeRate:
         return discharge_rate_vec
 
     def to_csv(self, time_range: str, filename: str):
-        logging.info(f"Publishing discharge rate data to {filename}")
+        logging.info(f"Publishing {time_range} discharge rate data to {filename}.csv .")
 
         with open(filename, mode='w', newline='') as file:
             writer = csv.writer(file)

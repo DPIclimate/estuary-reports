@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 def upload_dataset(file_path: str, chart_id: str, dw_key: str) -> None:
-    logging.info(f"Exporting {file_path} to datawrapper.de...")
+    logging.info(f"Uploading {file_path} to datawrapper.de .")
 
     # Read in the file as a raw string
     with open(file_path, 'r') as file:
