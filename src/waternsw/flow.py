@@ -94,7 +94,7 @@ class DischargeRate:
                 "User-Agent": USER_AGENT
             }
 
-            for attempt in range(max_retries):
+            for attempt in range(1, max_retries+1):
                 try:
                     logging.info(f"(Attempt {attempt}/{max_retries}) at requesting WaterNSW discharge rate data for {site['name']}.")
                     res = requests.get(url, headers=headers).json()
