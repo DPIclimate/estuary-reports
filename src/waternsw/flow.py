@@ -58,7 +58,7 @@ class DischargeRate:
     @classmethod
     def new(cls, start, end, config) -> List['DischargeRate']:
 
-        print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S')} to {datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S')}")
+        print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S')} to {datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S')}.")
 
         max_retries = 5
 
