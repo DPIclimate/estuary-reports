@@ -96,6 +96,7 @@ class DischargeRate:
 
             for attempt in range(max_retries):
                 try:
+                    logging.info(f"(Attempt {attempt}/{max_retries}) at requesting WaterNSW discharge rate data for {site['name']}.")
                     res = requests.get(url, headers=headers).json()
                     discharge_rate_vec.append(cls(error_num=res['error_num'], return_field=res['return']))
                     break
