@@ -141,17 +141,9 @@ def main():
         # Join yearlyndischarge dataset files. (This only joins 1 tributarys data for the current year with previous year/s historical data.)
         if site['name'] == 'Clyde River':
             yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
-
-
-
-
-
+            
         # Join all tributaries discharge datasets for the current year into 1 data frame.
         waternswflow.join_flow_datasets("yearly", site_directory, site['water_nsw'])
-
-
-
-
 
         # Create weekly dataset for precipitation bar chart. Using Variable ID for aggregate data for total daily rainfall values.
         weeklybar.weekly_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
