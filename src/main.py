@@ -95,7 +95,8 @@ def main():
                 #logging.info(f"Adding static columns for {file['name']}.csv")
                 with open(file_path, 'w') as f:
                     writer = csv.writer(f)
-                    writer.writerow(file['columns'])
+                    if file['columns'] is not None:
+                        writer.writerow(file['columns'])
 
         logging.info(f"Created files for {site['name']} in {site_directory}.")
         time.sleep(5)
@@ -137,9 +138,20 @@ def main():
         year_start, year_end = utils.this_year()
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
         
-        # Join discharge dataset files.
+        # Join yearlyndischarge dataset files. (This only joins 1 tributarys data for the current year with previous year/s historical data.)
         if site['name'] == 'Clyde River':
             yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
+
+
+
+
+
+        # Join all tributaries discharge datasets for the current year into 1 data frame.
+        waternswflow.join_flow_datasets("yearly", site_directory, site['water_nsw'])
+
+
+
+
 
         # Create weekly dataset for precipitation bar chart. Using Variable ID for aggregate data for total daily rainfall values.
         weeklybar.weekly_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
@@ -157,15 +169,15 @@ def main():
         datawrapperexport.all_files_to_datawrapper(site_directory, site, dw_key)
 
         # Download chart images from data wrapper for PDF report generation
-        for file in site['files']:
-            filename = f"{site_directory}/imgs/{file['name']}.png"
-            datawrapperdownload.download_image(filename, file['chart_id'], dw_key)
+        #for file in site['files']:
+        #    filename = f"{site_directory}/imgs/{file['name']}.png"
+        #    datawrapperdownload.download_image(filename, file['chart_id'], dw_key)
 
         print(f"{site['name']} complete.")
 
 
     for site in config['sites']:
-        if site['name'] == 'Clyde River':
+        if site['name'] == 'Clyde Rivers':
             # Generate a PDF report for each site.
             site_directory = os.path.join(os.getcwd(), f'output/{site["directory"]}')
             # Get current working directory

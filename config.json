@@ -563,6 +563,13 @@
                         "2023",
                         "Quality"
                     ]
+                },
+                {
+                    "filepath": "yearly-combined-discharge.csv",
+                    "name": "yearly-combined-discharge",
+                    "chart_id": "XPEcK",
+                    "dynamic": false,
+                    "columns": []
                 }
             ],
             "water_nsw": {
@@ -867,6 +874,13 @@
                         "Minimum",
                         "Maximum"
                     ]
+                },
+                {
+                    "filepath": "yearly-combined-discharge.csv",
+                    "name": "yearly-combined-discharge",
+                    "chart_id": "HVNDs",
+                    "dynamic": false,
+                    "columns": []
                 }
             ],
             "water_nsw": {
