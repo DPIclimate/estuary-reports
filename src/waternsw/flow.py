@@ -60,7 +60,7 @@ class DischargeRate:
 
         print(f"Requesting WaterNSW Data for {len(config['sites'])} sites for the period {int(datetime.fromtimestamp(start).strftime('%Y%m%d%H%M%S'))} to {int(datetime.fromtimestamp(end).strftime('%Y%m%d%H%M%S'))}")
 
-        max_retries = 3
+        max_retries = 5
 
         discharge_rate_vec = []
 
@@ -94,13 +94,13 @@ class DischargeRate:
                 "User-Agent": USER_AGENT
             }
 
-            for _ in range(max_retries):
+            for attempt in range(max_retries):
                 try:
                     res = requests.get(url, headers=headers).json()
                     discharge_rate_vec.append(cls(error_num=res['error_num'], return_field=res['return']))
                     break
                 except Exception as e:
-                    logging.error(f"Error: {e} when getting data for {site['name']}. Retrying...")
+                    logging.error(f"Attempt ({attempt}/{max_retries}) Error: {e} when getting data for {site['name']}.")
                     time.sleep(5)
 
         return discharge_rate_vec
