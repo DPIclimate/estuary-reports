@@ -19,14 +19,26 @@
                 {
                     "name": "Wallamba",
                     "location": "Wallamba",
-                    "harvest_area": "Unknown",
+                    "harvest_area": "Wallamba",
                     "buoy_number": "3"
                 },
                 {
                     "name": "Wreck Lease Bandicoot",
                     "location": "Wreck Lease Bandicoot",
-                    "harvest_area": "Unknown",
+                    "harvest_area": "Wreck Lease Bandicoot",
                     "buoy_number": "4"
+                },
+                {
+                    "name": "The Big Lease",
+                    "location": "The Big Lease",
+                    "harvest_area": "Wallis Island",
+                    "buoy_number": "5"
+                },
+                {
+                    "name": "The Paddock",
+                    "location": "The Paddock",
+                    "harvest_area": "Cape Hawke",
+                    "buoy_number": "6"
                 }
             ],
             "ubidots_aws_variable_ids": [
