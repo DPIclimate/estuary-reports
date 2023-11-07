@@ -72,7 +72,10 @@ class Extremes:
 
             abs_min = 0.0
             init = True
-            min_value = min([min_val["value"] for min_val in weekly_min.results if min_val["value"] is not None])
+            if weekly_min is not None and weekly_min.results is not None:
+                min_value = min([min_val["value"] for min_val in weekly_min.results if min_val["value"] is not None])
+            else:
+                min_value = 0.0
 
             print(f"Min Value for {ha.name}: {min_value}")
 
@@ -89,7 +92,10 @@ class Extremes:
             abs_max = 0.0
             init = True
 
-            max_value = max([max_val["value"] for max_val in weekly_max.results if max_val["value"] is not None])
+            if weekly_max is not None:
+                max_value = max([max_val["value"] for max_val in weekly_max.results if max_val["value"] is not None])
+            else:
+                max_value = 0.0
 
             location = ""
             if ha.name != None:
