@@ -92,7 +92,7 @@ class Extremes:
             abs_max = 0.0
             init = True
 
-            if weekly_max is not None:
+            if weekly_max is not None and weekly_max.results is not None:
                 max_value = max([max_val["value"] for max_val in weekly_max.results if max_val["value"] is not None])
             else:
                 max_value = 0.0
