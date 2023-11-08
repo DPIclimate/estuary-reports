@@ -50,7 +50,10 @@
             ],
             "harvest_areas": [
                 "Long Island",
-                "Wallis Island"
+                "Wallis Island",
+                "Wallamba",
+                "Wreck Lease Bandicoot",
+                "Cape Hawke"
             ],
             "water_temperature_variables": [
                 "64c755c97fedc1000c651864",
@@ -126,8 +129,10 @@
                     "columns": [
                         "Date",
                         "Long Island",
-                        "Unknown",
-                        "Wallis Island"
+                        "Wallis Island",
+                        "Wallamba",
+                        "Wreck Lease Bandicoot",
+                        "Cape Hawke"
                     ]
                 },
                 {
@@ -138,8 +143,10 @@
                     "columns": [
                         "Date",
                         "Long Island",
-                        "Unknown",
-                        "Wallis Island"
+                        "Wallis Island",
+                        "Wallamba",
+                        "Wreck Lease Bandicoot",
+                        "Cape Hawke"
                     ]
                 },
                 {
