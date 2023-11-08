@@ -222,7 +222,9 @@ input ~ .tab { display: none; }
 #tab11-flow:checked ~ .tab.weekly6-view-flow,
 #tab12-flow:checked ~ .tab.yearly6-view-flow,
 #tab13-flow:checked ~ .tab.weekly7-view-flow,
-#tab14-flow:checked ~ .tab.yearly7-view-flow {
+#tab14-flow:checked ~ .tab.yearly7-view-flow,
+#tab15-flow:checked ~ .tab.weekly8-view-flow,
+#tab16-flow:checked ~ .tab.yearly8-view-flow {
   display: block;
 }
 
