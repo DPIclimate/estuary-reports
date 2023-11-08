@@ -26,7 +26,9 @@ async function createValuesTable() {
 			"64c755c97fedc1000c651864",
 			"64c7559c36a1c6000cb927b4",
 			"64c755f836a1c6000cb927b5",
-			"64be279236a1c6000cb92752"
+			"64be279236a1c6000cb92752",
+			"654ac6a2a95a91000c0a8a9f",
+			"654ac65ad9606a000c36466f"
 		]
 	};
 
@@ -117,7 +119,9 @@ async function createValuesTable() {
 			"64c755c17fedc1000c651863",
 			"64c75596fe7bed000b6cd01c",
 			"64c755f3fe7bed000b6cd01d",
-			"64be278a7fedc1000c6517f3"
+			"64be278a7fedc1000c6517f3",
+			"654ac68dd9606a000c364670",
+			"654ac646a95a91000c0a8a9e"
 		]
 	}
 
