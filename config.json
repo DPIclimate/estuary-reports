@@ -56,7 +56,9 @@
                 "64c755c97fedc1000c651864",
                 "64c7559c36a1c6000cb927b4",
                 "64c755f836a1c6000cb927b5",
-                "64be279236a1c6000cb92752"
+                "64be279236a1c6000cb92752",
+                "654ac65ad9606a000c36466f",
+                "654ac6a2a95a91000c0a8a9f"
             ],
             "historical_discharge_files": [
                 "historical-dischargerate.csv"
