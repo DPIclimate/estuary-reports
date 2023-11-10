@@ -262,7 +262,7 @@ input ~ .tab { display: none; }
 }
 
 .error-row {
-	background-color: #ee0d0d;
+	background-color: #ff2a2a;
 }
 
 .maintainance-row {
