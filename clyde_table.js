@@ -18,9 +18,7 @@ async function createValuesTable() {
 		timestamp: {
 			values: [],
 			colors: []
-		},
-		temperature_ids: [],
-		salinity_ids: []
+		}
 	};
 
 	const temperature_data = {
@@ -48,7 +46,7 @@ async function createValuesTable() {
 
 	var options = {
 		method: "POST",
-		headers: {"x-auth-token": "BBAU-vf8qa7Ca1UN8eQlyB9Md2JTfK77Ezr",
+		headers: {"x-auth-token": "BBAU-VOMMw42nHGcLPKVfBMQxYXDUiL78ln",
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(ts_body),
@@ -189,9 +187,6 @@ async function createValuesTable() {
 			}
 
 			dataset.salinity.values.push(average.toFixed(1));
-
-			dataset.salinity_ids.push(salinity_data.ids[i]);
-			dataset.temperature_ids.push(temperature_data.ids[i]);
 		}
 	})
 	
@@ -201,9 +196,6 @@ async function createValuesTable() {
 	head.insertCell(1).innerHTML = "Salinity";
 	head.insertCell(2).innerHTML = "Temperature";
 	head.insertCell(3).innerHTML = "Date";
-	head.insertCell(4).innerHTML = "Historical";
-
-	// console.log(dataset)
 
 	dataset.buoys.map(function(b, i) {
 		const table = document.getElementById("data-body");
@@ -219,19 +211,6 @@ async function createValuesTable() {
 		temperature.style.color = dataset.temperature.colors[i];
 		date.innerHTML = dataset.timestamp.values[i];
 		date.style.color = dataset.timestamp.colors[i];
-
-		// Create a new cell for the chart button
-		var chartCell = row.insertCell(4);
-
-		// Create a chart button for each row
-		var chartButton = document.createElement("button");
-		chartButton.innerHTML = "&#x1F4C8;"; // Chart Icon.
-		chartButton.addEventListener("click", function () {
-			console.log("Dataset");
-			console.log(dataset);
-			openChartPopup(b, dataset.salinity_ids[i], dataset.temperature_ids[i]);
-		});
-		chartCell.appendChild(chartButton);
 	});
 
 	let table = new DataTable("#data-table", {
@@ -242,123 +221,3 @@ async function createValuesTable() {
 		"paging": false
 	});
 }
-
-
-function openChartPopup(buoy, sal_id, temp_id) {
-	// Create a popup window for the chart
-	var popup = window.open("", "Chart Popup", "width=600,height=400");
-	popup.document.title = buoy; // Set the title of the popup window to the name of the buoy
-
-	// After creating popup window, display spinning loading symbol whilst data is being retrieved.
-	popup.document.body.innerHTML = '<div class="loading-spinner"></div>';
-
-	// CSS styles for the loading spinner
-	const spinnerStyles = `
-		.loading-spinner {
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			border: 4px solid #f3f3f3;
-			border-top: 4px solid #3498db;
-			animation: spin 1s linear infinite;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
-
-		@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-		}
-	`;
-
-	// Create a <style> element and append the CSS styles to it
-	const styleElement = popup.document.createElement('style');
-	styleElement.innerHTML = spinnerStyles;
-	popup.document.head.appendChild(styleElement);
-
-	// Get the current year
-	const currentYear = new Date().getFullYear();
-
-	// Calculate the start and end timestamps for the current year
-	const endTimestamp = new Date().getTime();
-	const startTimestamp = endTimestamp - (365 * 24 * 60 * 60 * 1000);
-
-	// Example: Fetch data for the provided device IDs.
-	fetch("https://industrial.api.ubidots.com/api/v1.6/data/raw/series", {
-		method: "POST",
-		headers: {
-			"X-Auth-Token": "BBAU-VOMMw42nHGcLPKVfBMQxYXDUiL78ln",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			variables: [sal_id, temp_id],
-			columns: ["value.value", "timestamp"],
-			join_dataframes: false,
-			start: startTimestamp,
-			end: endTimestamp,
-		}),
-	})
-	.then((res) => res.json())
-	.then((response) => {
-		// Extract the salinity and temperature data from the response
-		const timestampData = response.results[0].map((entry) => {
-			const timestamp = new Date(entry[1]);
-			return timestamp.toLocaleString(); // Convert timestamp to human-readable format
-		}).reverse();
-
-		const salinityData = response.results[0].map((entry) => entry[0]).reverse();
-
-		const temperatureData = response.results[1].map((entry) => entry[0]).reverse();
-
-		// Combine the salinity and temperature data into an array for plotting
-		const chartData = salinityData.map((salinity, index) => ({
-			salinity,
-			temperature: temperatureData[index],
-			timestamp: timestampData[index],
-		}));
-
-		// Create a new canvas element
-		const canvas = popup.document.createElement("canvas");
-		canvas.id = "chartCanvas";
-
-		// Remove the loading message
-		popup.document.body.innerHTML = "";
-
-		popup.document.body.appendChild(canvas);
-
-		var ctx = canvas.getContext("2d");
-		new Chart(ctx, {
-			type: "line",
-			data: {
-				labels: chartData.map((data) => data.timestamp),
-				datasets: [
-					{
-						label: "Salinity",
-						data: chartData.map((data) => data.salinity),
-						borderColor: "blue",
-						fill: false,
-					},
-					{
-						label: "Temperature",
-						data: chartData.map((data) => data.temperature),
-						borderColor: "red",
-						fill: false,
-					},
-				],
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-			},
-		});
-
-	})
-	.catch((error) => {
-		// Handle any errors
-		console.error(error);
-	});
-
-}
-
