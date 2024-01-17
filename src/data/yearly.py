@@ -6,6 +6,7 @@ import ubidots.device.data as ubidotsdata
 import pandas as pd
 import requests
 import util as utils
+from datetime import datetime
 
 class WaterTempRecord:
     def __init__(self, date: str, water_temperature: Optional[float]):
@@ -101,6 +102,7 @@ def join_precipitation_datasets(site_directory) -> None:
         f"{site_directory}/2020-precipitation.csv",
         f"{site_directory}/2021-precipitation.csv",
         f"{site_directory}/2022-precipitation.csv",
+        f"{site_directory}/2023-precipitation.csv",
     ]
 
     df = pd.DataFrame()

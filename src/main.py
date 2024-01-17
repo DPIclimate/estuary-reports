@@ -143,9 +143,12 @@ def main():
         # Create year dataset for discharge rate WaterNSW.
         year_start, year_end = utils.this_year()
         waternswflow.DischargeRate(error_num=None, return_field=None).generate("yearly", site_directory, site["water_nsw"])
+
+        # Create datasets for last year that were accidentally overwrtitten by the current years data. Only used to run once, do not keep active.
+        # waternswflow.DischargeRate(error_num=None, return_field=None).generate("last_year", site_directory, site["water_nsw"])
         
         # Join yearlyndischarge dataset files. (This only joins 1 tributarys data for the current year with previous year/s historical data.)
-        if site['name'] == 'Clyde River':
+        if site['name'] == 'Clyde River' or site['name'] == 'Wallis Lakes':
             yearlydata.join_flow_datasets(site_directory, files=site['historical_discharge_files'])
 
         # Join all tributaries discharge datasets for the current year into 1 data frame.
@@ -156,8 +159,9 @@ def main():
 
         # Create year to date precipitation datasets.
         yearlydata.year_to_date_precipitation_to_csv(site_directory, token, site['ubidots_aws_variable_ids'])
-        if site['name'] == 'Clyde River':
-            yearlydata.join_precipitation_datasets(site_directory)
+
+        # Create combined precipitation dataset for each site. If files for each year exist join them, skip if file doesn't exist.
+        yearlydata.join_precipitation_datasets(site_directory)
 
         # Create year to date and historical water temperature datasets.
         yearlydata.year_to_date_temperature_to_csv(site_directory, token, site['water_temperature_variables'])

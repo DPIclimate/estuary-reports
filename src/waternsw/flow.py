@@ -107,7 +107,7 @@ class DischargeRate:
         return discharge_rate_vec
 
     def to_csv(self, time_range: str, filename: str):
-        logging.info(f"Publishing {time_range} discharge rate data to {filename}.csv .")
+        logging.info(f"Publishing {time_range} discharge rate data to {filename} .")
 
         with open(filename, mode='w', newline='') as file:
             writer = csv.writer(file)
@@ -115,6 +115,8 @@ class DischargeRate:
                 writer.writerow(['Date', 'Volume', 'Quality'])
             elif time_range == "yearly":
                 writer.writerow(['Date', f'{datetime.now().year}', 'Quality'])
+            elif time_range == "last_year":
+                writer.writerow(['Date', f'{int(datetime.now().year)-1}', 'Quality'])
 
             sum = 0.0
             monthly_sum = 0.0
@@ -132,6 +134,10 @@ class DischargeRate:
                     flow = float(trace['v'])
                     sum += flow
                     writer.writerow([date_str, round(sum,2), trace['q']])
+                elif time_range == "last_year":
+                    flow = float(trace['v'])
+                    sum += flow
+                    writer.writerow([date_str, round(sum,2), trace['q']])
 
     @classmethod
     def generate(cls, time_range: str, site_directory, config):
@@ -142,6 +148,8 @@ class DischargeRate:
             start, end = utils.two_weeks()
         elif time_range == "yearly":
             start, end = utils.this_year()
+        elif time_range == "last_year":
+            start, end = utils.last_year()
         else:
             raise ValueError("Unknown time range specified. Append this range before re-running")
 

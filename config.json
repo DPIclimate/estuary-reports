@@ -64,17 +64,28 @@
                 "654ac6a2a95a91000c0a8a9f"
             ],
             "historical_discharge_files": [
-                "historical-dischargerate.csv"
+                "historical-dischargerate.csv",
+                "yearly-willina.csv"
             ],
             "files": [
                 {
-                    "filepath": "yearly-precipitation.csv",
+                    "filepath": "combined-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "1ZObW",
                     "dynamic": false,
                     "columns": [
                         "date",
-                        "2023"
+                        "2024"
+                    ]
+                },
+                {
+                    "filepath": "combined-dischargerate.csv",
+                    "name": "combined-dischargerate",
+                    "chart_id": "vlwxs",
+                    "dynamic": false,
+                    "columns": [
+                        "2023",
+                        "Date"
                     ]
                 },
                 {
@@ -199,7 +210,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 }
@@ -278,13 +289,13 @@
             ],
             "files": [
                 {
-                    "filepath": "yearly-precipitation.csv",
+                    "filepath": "combined-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "uygV1",
                     "dynamic": false,
                     "columns": [
                         "date",
-                        "2023"
+                        "2024"
                     ]
                 },
                 {
@@ -405,7 +416,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -427,7 +438,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -449,7 +460,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -471,7 +482,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -493,7 +504,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -515,7 +526,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -537,7 +548,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -559,7 +570,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -581,7 +592,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -717,13 +728,13 @@
             ],
             "files": [
                 {
-                    "filepath": "yearly-precipitation.csv",
+                    "filepath": "combined-precipitation.csv",
                     "name": "yearly-precipitation",
                     "chart_id": "i3brJ",
                     "dynamic": false,
                     "columns": [
                         "date",
-                        "2023"
+                        "2024"
                     ]
                 },
                 {
@@ -848,7 +859,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -859,7 +870,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -870,7 +881,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -1037,8 +1048,9 @@
                         "2020",
                         "2021",
                         "2022",
-                        "date",
-                        "2023"
+                        "2023",
+                        "2024",
+                        "date"
                     ]
                 },
                 {
@@ -1162,7 +1174,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },
@@ -1173,7 +1185,7 @@
                     "dynamic": false,
                     "columns": [
                         "Date",
-                        "2023",
+                        "2024",
                         "Quality"
                     ]
                 },

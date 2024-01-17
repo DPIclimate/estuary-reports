@@ -73,7 +73,12 @@ class Extremes:
             abs_min = 0.0
             init = True
             if weekly_min is not None and weekly_min.results is not None:
-                min_value = min([min_val["value"] for min_val in weekly_min.results if min_val["value"] is not None])
+                try: # TODO: Fix this try/except as temporary patch for empty series provided to min function.
+                    min_value = min([min_val["value"] for min_val in weekly_min.results if min_val["value"] is not None])
+                except Exception as e:
+                    # Handle the exception here
+                    print(f"Min Value series was most likely empty, setting to zero: {e}")
+                    min_value = 0.0
             else:
                 min_value = 0.0
 
@@ -93,7 +98,12 @@ class Extremes:
             init = True
 
             if weekly_max is not None and weekly_max.results is not None:
-                max_value = max([max_val["value"] for max_val in weekly_max.results if max_val["value"] is not None])
+                try: # TODO: Fix this try/except as temporary patch for empty series provided to max function.
+                    max_value = max([max_val["value"] for max_val in weekly_max.results if max_val["value"] is not None])
+                except Exception as e:
+                    # Handle the exception here
+                    print(f"Min Value series was most likely empty, setting to zero: {e}")
+                    max_value = 0.0
                 if max_value > 100:
                     max_value = 0.0
             else:

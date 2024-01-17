@@ -2,6 +2,7 @@ import datetime
 from typing import List, Tuple
 import json
 
+
 def get_config(filename: str = "config.json"):
     try:
         with open(filename) as f:
@@ -11,15 +12,18 @@ def get_config(filename: str = "config.json"):
     except json.decoder.JSONDecodeError:
         print("config.json is not valid JSON. Please check the file and try again.")
 
+
 def unix_to_local(unix_time: int) -> datetime.datetime:
     datetime_ts = datetime.datetime.fromtimestamp(unix_time / 1000, datetime.timezone.utc)
     return datetime_ts.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
+
 
 def next_10_days() -> Tuple[int, int]:
     today = datetime.date.today()
     start = datetime.datetime.combine(today - datetime.timedelta(days=1), datetime.time.min, datetime.timezone.utc)
     end = start + datetime.timedelta(days=10)
     return (int(start.timestamp()) * 1000, int(end.timestamp()) * 1000)
+
 
 def this_year() -> Tuple[int, int]:
     utc_time_now = datetime.datetime.now(datetime.timezone.utc)
@@ -29,12 +33,24 @@ def this_year() -> Tuple[int, int]:
     start_of_year_ts = int(start_of_year.timestamp() * 1000)
     return (start_of_year_ts, ts_now)
 
+
+def last_year() -> Tuple[int, int]:
+    utc_time_now = datetime.datetime.now(datetime.timezone.utc)
+    local_time_now = utc_time_now.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
+    start_of_last_year = datetime.datetime(local_time_now.year - 1, 1, 1, tzinfo=datetime.timezone(datetime.timedelta(hours=10)))
+    end_of_last_year = datetime.datetime(local_time_now.year - 1, 12, 31, 23, 59, 59, tzinfo=datetime.timezone(datetime.timedelta(hours=10)))
+    start_of_last_year_ts = int(start_of_last_year.timestamp() * 1000)
+    end_of_last_year_ts = int(end_of_last_year.timestamp() * 1000)
+    return (start_of_last_year_ts, end_of_last_year_ts)
+
+
 def one_week() -> Tuple[int, int]:
     time_now = datetime.datetime.now(datetime.timezone.utc)
     local_time_now = time_now.astimezone(datetime.timezone(datetime.timedelta(hours=10)))
     midnight_today = datetime.datetime.combine(local_time_now.date(), datetime.time.min, datetime.timezone(datetime.timedelta(hours=10)))
     last_week = midnight_today - datetime.timedelta(days=7)
     return (int(last_week.timestamp() * 1000), int(time_now.timestamp() * 1000))
+
 
 def two_weeks() -> Tuple[int, int]:
     time_now = datetime.datetime.now(datetime.timezone.utc)
@@ -43,10 +59,12 @@ def two_weeks() -> Tuple[int, int]:
     last_two_weeks = midnight_today - datetime.timedelta(days=14)
     return (int(last_two_weeks.timestamp()*1000), int(time_now.timestamp()*1000))
 
+
 def last_week() -> Tuple[int, int]:
     last_week_end = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) * 1000 - 604800000
     last_week_start = last_week_end - 604800000
     return (int(last_week_start), int(last_week_end))
+
 
 def weekly_column_names() -> List[str]:
     last_week, _now = one_week()
@@ -57,6 +75,7 @@ def weekly_column_names() -> List[str]:
         col_names.append(local_day)
         unix_time += 86400000
     return col_names
+
 
 def unix_range_to_timestring(unix_range: Tuple[int, int]) -> Tuple[str, str]:
     start_unix = datetime.datetime.fromtimestamp(unix_range[0] / 1000, datetime.timezone.utc)
