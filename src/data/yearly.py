@@ -46,28 +46,31 @@ def year_to_date_temperature_to_csv(site_directory, token: str, variables:List[s
                 end=end,
             ).resample(token)
 
-            for day in resampled.results:
-                ts = day[0]
-                if ts is None:
-                    continue
-
-                date = unix_to_local(int(ts)).strftime("%b")
-
-                sum_ = 0.0
-                n = 0.0
-                for value in day[1:]:
-                    if value is None:
+            try:
+                for day in resampled.results:
+                    ts = day[0]
+                    if ts is None:
                         continue
-                    if 30.0 > value > 10.0:
-                        sum_ += value
-                        n += 1.0
-                if sum_ != 0.0 and n != 0.0:
-                    res = WaterTempRecord(date=date, water_temperature=sum_ / n)
-                    wtr.writerow([res.date, res.water_temperature])
-                else:
-                    res = WaterTempRecord(date=date, water_temperature=None)
-                    wtr.writerow([res.date, res.water_temperature])
-                    print(f"Zero division error. Sum = {sum_}, n = {n}")
+
+                    date = unix_to_local(int(ts)).strftime("%b")
+
+                    sum_ = 0.0
+                    n = 0.0
+                    for value in day[1:]:
+                        if value is None:
+                            continue
+                        if 30.0 > value > 10.0:
+                            sum_ += value
+                            n += 1.0
+                    if sum_ != 0.0 and n != 0.0:
+                        res = WaterTempRecord(date=date, water_temperature=sum_ / n)
+                        wtr.writerow([res.date, res.water_temperature])
+                    else:
+                        res = WaterTempRecord(date=date, water_temperature=None)
+                        wtr.writerow([res.date, res.water_temperature])
+                        print(f"Zero division error. Sum = {sum_}, n = {n}")
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
 
 
 def year_to_date_precipitation_to_csv(site_directory, aws_token: str, variables: List[str]) -> None:
