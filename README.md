@@ -1,7 +1,7 @@
 # estuary-reports
 
 #### A dynamic NSW Estuary data report compiler and generator. 
-#### Created by [Harvey Bates](https://github.com/HarveyBates) under [pilot-reports](https://github.com/DPIclimate/pilot-reports) repo, expanded and maintained by [Ben Sefton](https://github.com/bsefton12) as [Estuary-Reports](https://dpiclimate.github.io/estuary-reports/).
+#### Created by [Harvey Bates](https://github.com/HarveyBates) under [pilot-reports](https://github.com/DPIclimate/pilot-reports) repo, expanded and currently maintained by [Ben Sefton](https://github.com/bsefton12) as [Estuary-Reports](https://dpiclimate.github.io/estuary-reports/).
 #### Built using Python, LaTeX and DataWrapper using timeseries data from WaterNSW and Ubidots IoT data platform.
 
 ## Data Wrapper Charts
