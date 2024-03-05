@@ -1,5 +1,4 @@
 # estuary-reports
-[![Build, Run & Deploy](https://github.com/DPIclimate/estuary-reports/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/DPIclimate/estuary-reports/actions/workflows/main.yml)
 
 #### A dynamic NSW Estuary data report compiler and generator. 
 #### Created by [Harvey Bates](https://github.com/HarveyBates) under [pilot-reports](https://github.com/DPIclimate/pilot-reports) repo, expanded and maintained by [Ben Sefton](https://github.com/bsefton12) as [Estuary-Reports](https://dpiclimate.github.io/estuary-reports/).
