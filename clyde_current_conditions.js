@@ -6,7 +6,8 @@
  */
 async function getTempAndHumid() {
 	const UBIDOTS_BASE_URL = "https://industrial.api.ubidots.com.au/api/v1.6";
-	const UBIDOTS_TOKEN = "BBAU-5C7fdQtm2qlveEOSDc0gCk85e7a5Sa";
+	// Token used by other pages in this repo to access /data/raw/series
+	const UBIDOTS_TOKEN = "BBAU-F9a1Sg1CL70IAkz8YmqMYKcgFBxqCb";
 
 	async function fetchRawSeries(variableIds, startMs) {
 		const body = {
@@ -25,12 +26,23 @@ async function getTempAndHumid() {
 			body: JSON.stringify(body)
 		};
 
-		const res = await fetch(`${UBIDOTS_BASE_URL}/data/raw/series`, options);
-		if (!res.ok) {
-			throw new Error(`Ubidots raw series request failed (${res.status})`);
+		try {
+			const res = await fetch(`${UBIDOTS_BASE_URL}/data/raw/series`, options);
+			if (!res.ok) {
+				console.warn(`Ubidots raw series request failed (${res.status})`);
+				return variableIds.map(() => []);
+			}
+			const json = await res.json();
+			const results = Array.isArray(json?.results) ? json.results : [];
+			// Ensure we always return one array per requested variable.
+			if (results.length < variableIds.length) {
+				return [...results, ...variableIds.slice(results.length).map(() => [])];
+			}
+			return results;
+		} catch (err) {
+			console.warn("Ubidots raw series request failed", err);
+			return variableIds.map(() => []);
 		}
-		const json = await res.json();
-		return Array.isArray(json?.results) ? json.results : [];
 	}
 
 	function sortByTimestampAscending(points) {
