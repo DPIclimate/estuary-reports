@@ -5,6 +5,91 @@
  * recent values.
  */
 async function getTempAndHumid() {
+	const UBIDOTS_BASE_URL = "https://industrial.api.ubidots.com.au/api/v1.6";
+	// Shared token used for raw series requests
+	const UBIDOTS_TOKEN = "BBAU-v3A2zNrz8pNyYuIt9zVEAaMmITfW5k";
+
+	async function fetchRawSeries(variableIds, startMs) {
+		const body = {
+			variables: variableIds,
+			columns: ["value.value", "timestamp"],
+			join_dataframes: false,
+			start: Math.floor(startMs)
+		};
+
+		const options = {
+			method: "POST",
+			headers: {
+				"x-auth-token": UBIDOTS_TOKEN,
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		};
+
+		try {
+			const res = await fetch(`${UBIDOTS_BASE_URL}/data/raw/series`, options);
+			if (!res.ok) {
+				console.warn(`Ubidots raw series request failed (${res.status})`);
+				return variableIds.map(() => []);
+			}
+			const json = await res.json();
+			const results = Array.isArray(json?.results) ? json.results : [];
+			if (results.length < variableIds.length) {
+				return [...results, ...variableIds.slice(results.length).map(() => [])];
+			}
+			return results;
+		} catch (err) {
+			console.warn("Ubidots raw series request failed", err);
+			return variableIds.map(() => []);
+		}
+	}
+
+	function sortByTimestampAscending(points) {
+		return points.slice(0).sort((a, b) => a.x - b.x);
+	}
+
+	function alignSeriesToTimestamps(primaryTimestamps, seriesPoints) {
+		const lookup = new Map();
+		seriesPoints.forEach(p => lookup.set(p.x, p.y));
+		return primaryTimestamps.map(ts => ({ x: ts, y: lookup.has(ts) ? lookup.get(ts) : null }));
+	}
+
+	function degreesToCompassLabel(degrees) {
+		const wind_dir = [
+			{ direction: 0, value: "N" },
+			{ direction: 22.5, value: "NNE" },
+			{ direction: 45, value: "NE" },
+			{ direction: 67.5, value: "ENE" },
+			{ direction: 90, value: "E" },
+			{ direction: 112.5, value: "ESE" },
+			{ direction: 135, value: "SE" },
+			{ direction: 157.5, value: "SSE" },
+			{ direction: 180, value: "S" },
+			{ direction: 202.5, value: "SSW" },
+			{ direction: 225, value: "SW" },
+			{ direction: 247.5, value: "WSW" },
+			{ direction: 270, value: "W" },
+			{ direction: 292.5, value: "WNW" },
+			{ direction: 315, value: "NW" },
+			{ direction: 337.5, value: "NNW" },
+		];
+
+		const v = Number(degrees);
+		if (!Number.isFinite(v)) {
+			return null;
+		}
+
+		let minDiff = Infinity;
+		let label = "N";
+		wind_dir.forEach(d => {
+			const diff = Math.abs(d.direction - v);
+			if (diff < minDiff) {
+				minDiff = diff;
+				label = d.value;
+			}
+		});
+		return label;
+	}
 
 	var dataset = {
 		temperature: {
@@ -22,188 +107,74 @@ async function getTempAndHumid() {
 		},
 	};
 	
-	// Temperature 
-
+	// Variables
 	const air_temperature_var = "64360af4c92fc7000cdfc94d";
+	const humidity_var = "64360afc16a090000c41ef41";
+	const wind_speed_var = "64360af7c92fc7000cdfc94e";
+	const wind_dir_var = "64360affc92fc7000cdfc950";
 
-	var body = {
-	  "variables": [air_temperature_var],
-	  "aggregation": "mean",
-	  "period": "1H",
-	  "join_dataframes": false,
-	  "start": new Date() - 604800000 // 7 days
-	};
+	const startMs = Date.now() - 604800000; // 7 days
+	const [tempRows, humidRows, windSpeedRows, windDirRows] = await fetchRawSeries(
+		[air_temperature_var, humidity_var, wind_speed_var, wind_dir_var],
+		startMs
+	);
 
-	var options = {
-		method: "POST",
-		headers: {
-			"x-auth-token": "BBAU-C4EsBViRdCN5axQdI1pKlCII8Dt2j2",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	};
+	function rowsToPoints(rows, valueToY) {
+		if (!Array.isArray(rows)) {
+			return [];
+		}
+		// rows are [value.value, timestamp]
+		const points = rows.map(v => {
+			const value = Array.isArray(v) ? v[0] : null;
+			const ts = Array.isArray(v) ? v[1] : null;
+			const x = Number(ts);
+			if (!Number.isFinite(x)) {
+				return null;
+			}
+			return { x, y: valueToY(value) };
+		}).filter(Boolean);
+		return sortByTimestampAscending(points);
+	}
 
-	var response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
-		.then(res => res.json());
+	dataset.temperature.values = rowsToPoints(tempRows, (value) => {
+		const v = Number(value);
+		if (Number.isFinite(v) && v < 50 && v >= -10) {
+			return parseFloat(v.toFixed(1));
+		}
+		return null;
+	});
+
+	dataset.humidity.values = rowsToPoints(humidRows, (value) => {
+		const v = Number(value);
+		if (Number.isFinite(v) && v < 100.1 && v >= 0) {
+			return parseFloat(v.toFixed(1));
+		}
+		return null;
+	});
+
+	dataset.wind.speed = rowsToPoints(windSpeedRows, (value) => {
+		const v = Number(value);
+		const windKnts = v * 1.9438445;
+		if (Number.isFinite(windKnts) && windKnts < 60 && windKnts >= 0) {
+			return parseFloat(windKnts.toFixed(1));
+		}
+		return null;
+	});
+
+	dataset.wind.direction = rowsToPoints(windDirRows, (value) => degreesToCompassLabel(value));
+
+	// Align humidity/wind arrays to temperature timestamps so tooltip indexing stays consistent.
+	const primaryTimestamps = dataset.temperature.values.map(p => p.x);
+	if (primaryTimestamps.length > 0) {
+		dataset.humidity.values = alignSeriesToTimestamps(primaryTimestamps, dataset.humidity.values);
+		dataset.wind.speed = alignSeriesToTimestamps(primaryTimestamps, dataset.wind.speed);
+		dataset.wind.direction = alignSeriesToTimestamps(primaryTimestamps, dataset.wind.direction);
+	}
 
 	const ts_options = {
 		day: "numeric",
 		month: "short"
 	};
-
-	response.results.map(function(r, i) {
-		if(r.length != 0) {
-			r.slice(0).reverse().map(function(v, x) {
-				var ts = v[0];
-				var value = v[1];
-				if (value < 50 && value >= -10) {
-					dataset.temperature.values.push({x: ts, y: value.toFixed(1)});
-				} else {
-					dataset.temperature.values.push({x: ts, y: null});
-				}
-			})
-		}
-	});
-
-	// Humidity
-
-	const humidity_var = "64360afc16a090000c41ef41";
-
-	body = {
-	  "variables": [humidity_var],
-	  "aggregation": "mean",
-	  "period": "1H",
-	  "join_dataframes": false,
-	  "start": new Date() - 604800000 // 7 days
-	};
-
-	options = {
-		method: "POST",
-		headers: {
-			"x-auth-token": "BBAU-C4EsBViRdCN5axQdI1pKlCII8Dt2j2",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	};
-
-	response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
-		.then(res => res.json());
-
-	response.results.map(function(r, i) {
-		if(r.length != 0) {
-			r.slice(0).reverse().map(function(v, x) {
-				var ts = v[0];
-				var value = v[1];
-				if (value < 100.1 && value >= 0) {
-					dataset.humidity.values.push({x: ts, y: value.toFixed(1)});
-				} else {
-					dataset.humidity.values.push({x: ts, y: null});
-				}
-			})
-		}
-	});
-	
-	// Wind speed
-
-	const wind_speed_var = "64360af7c92fc7000cdfc94e";
-
-	body = {
-	  "variables": [wind_speed_var],
-	  "aggregation": "mean",
-	  "period": "1H",
-	  "join_dataframes": false,
-	  "start": new Date() - 604800000 // 7 days
-	};
-
-	options = {
-		method: "POST",
-		headers: {
-			"x-auth-token": "BBAU-C4EsBViRdCN5axQdI1pKlCII8Dt2j2",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	};
-
-	response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
-		.then(res => res.json());
-
-	response.results.map(function(r, i) {
-		if(r.length != 0) {
-			r.slice(0).reverse().map(function(v, x) {
-				var ts = v[0];
-				var wind_knts = v[1] * 1.9438445;
-				if (wind_knts < 60 && wind_knts >= 0) {
-					dataset.wind.speed.push({x: ts, y: wind_knts.toFixed(1)});
-				} else {
-					dataset.wind.speed.push({x: ts, y: null});
-				}
-			})
-		}
-	});
-
-	const wind_dir = [
-		{ direction: 0, value: "N" },
-		{ direction: 22.5, value: "NNE" },
-		{ direction: 45, value: "NE" },
-		{ direction: 67.5, value: "ENE" },
-		{ direction: 90, value: "E" },
-		{ direction: 112.5, value: "ESE" },
-		{ direction: 135, value: "SE" },
-		{ direction: 157.5, value: "SSE" },
-		{ direction: 180, value: "S" },
-		{ direction: 202.5, value: "SSW" },
-		{ direction: 225, value: "SW" },
-		{ direction: 247.5, value: "WSW" },
-		{ direction: 270, value: "W" },
-		{ direction: 292.5, value: "WNW" },
-		{ direction: 315, value: "NW" },
-		{ direction: 337.5, value: "NNW" },
-	];
-
-	const wind_dir_var = "64360affc92fc7000cdfc950";
-
-	body = {
-	  "variables": [wind_dir_var],
-	  "aggregation": "mean",
-	  "period": "1H",
-	  "join_dataframes": false,
-	  "start": new Date() - 604800000 // 7 days
-	};
-
-	options = {
-		method: "POST",
-		headers: {
-			"x-auth-token": "BBAU-C4EsBViRdCN5axQdI1pKlCII8Dt2j2",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(body)
-	};
-
-	response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
-		.then(res => res.json());
-
-	response.results.map(function(r, i) {
-		if(r.length != 0) {
-			r.slice(0).reverse().map(function(v, x) {
-				var min_diff = 0;
-				var direction = "N";
-				var init_diff = true;
-				wind_dir.map(function(d, _) {
-					var diff = Math.abs(d.direction - v[1]);
-					if(init_diff) {
-						min_diff = diff;
-						direction = d.value;
-						init_diff = false;
-					}
-					if(diff < min_diff) {
-						min_diff = diff;
-						direction = d.value;
-					}
-				});
-				dataset.wind.direction.push({x: v[0], y: direction});
-			})
-		}
-	});
 
 	const data = {
 		datasets: [
@@ -260,7 +231,7 @@ async function getTempAndHumid() {
 	// Used to create night boxes (grey shadows) below
 	var night_intervals = [];
 	var night = false;
-	dataset.temperature.values.map(function(v, i) {
+	if (dataset.temperature.values.length > 0) dataset.temperature.values.map(function(v, i) {
 		var ts = new Date(v.x);
 		if(isNight(ts)) {
 			if (night == false) {
@@ -307,6 +278,9 @@ async function getTempAndHumid() {
 		night_boxes.push(box);
 	}
 
+	const xMin = dataset.temperature.values[0]?.x;
+	const xMax = dataset.temperature.values[dataset.temperature.values.length - 1]?.x;
+
 	const config = {
 		type: 'scatter',
 		data: data,
@@ -321,8 +295,8 @@ async function getTempAndHumid() {
 			showLine: true,
 			scales: {
 				x: {
-					min: dataset.temperature.values[0].x,
-					max: dataset.temperature.values[dataset.temperature.values.length - 1].x,
+					min: xMin,
+					max: xMax,
 					ticks: {
 						callback: function(v, i) {
 							var ts = new Date(v);
@@ -410,8 +384,8 @@ async function getTempAndHumid() {
 					},
 					limits: {
 						x: {
-							min: new Date(dataset.temperature.values[0].x).valueOf(),
-							max: new Date(dataset.temperature.values[dataset.temperature.values.length - 1].x).valueOf()
+							min: xMin != null ? new Date(xMin).valueOf() : undefined,
+							max: xMax != null ? new Date(xMax).valueOf() : undefined
 						}
 					},
 				},
@@ -434,6 +408,9 @@ async function getTempAndHumid() {
 					
 					if(idx > dataset.temperature.values.length - 1) {
 						idx = dataset.temperature.values.length - 1;
+					}
+					if (idx < 0 || dataset.temperature.values.length === 0) {
+						return;
 					}
 					var ts = new Date(dataset.temperature.values[idx].x);
 					ts = ts.toLocaleDateString("en-US", date_opts);
@@ -462,9 +439,10 @@ async function getTempAndHumid() {
 					if(idx > dataset.wind.speed.length - 1) {
 						idx = dataset.wind.speed.length - 1;
 					}
-					if(dataset.wind.speed[idx].y != null){
+					const windDir = dataset.wind.direction?.[idx]?.y;
+					if(dataset.wind.speed?.[idx]?.y != null){
 						document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
-							" kn " + dataset.wind.direction[idx].y;
+							" kn " + (windDir ?? "");
 					} else {
 						document.getElementById("wind-value").innerHTML = "No Data.";
 					}
@@ -480,6 +458,13 @@ async function getTempAndHumid() {
 				}
 				else {
 					var idx = dataset.temperature.values.length - 1;
+					if (idx < 0) {
+						document.getElementById("date-value").innerHTML = "No Data.";
+						document.getElementById("temperature-value").innerHTML = "No Data.";
+						document.getElementById("humidity-value").innerHTML = "No Data.";
+						document.getElementById("wind-value").innerHTML = "No Data.";
+						return;
+					}
 					var ts = new Date(dataset.temperature.values[idx].x);
 					ts = ts.toLocaleDateString("en-US", date_opts);
 					document.getElementById("date-value").innerHTML = ts 
@@ -489,8 +474,9 @@ async function getTempAndHumid() {
 					document.getElementById("humidity-value").innerHTML = dataset.humidity
 						.values[idx].y + " %";
 					idx = dataset.wind.speed.length - 1;
+					const windDir = dataset.wind.direction?.[idx]?.y;
 					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
-						" kn " + dataset.wind.direction[idx].y;
+						" kn " + (windDir ?? "");
 				}
 			},
 
@@ -504,18 +490,26 @@ async function getTempAndHumid() {
 	}
 
 
-	var idx = dataset.temperature.values.length - 1;
-	var ts = new Date(dataset.temperature.values[idx].x);
-	ts = ts.toLocaleDateString("en-US", date_opts);
-	document.getElementById("date-value").innerHTML = ts 
-	document.getElementById("temperature-value").innerHTML = dataset.temperature
-		.values[idx].y + " &deg;C";
-	idx = dataset.humidity.values.length - 1;
-	document.getElementById("humidity-value").innerHTML = dataset.humidity
-		.values[idx].y + " %";
-	idx = dataset.wind.speed.length - 1;
-	document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
-		" kn " + dataset.wind.direction[idx].y;
+	if (dataset.temperature.values.length > 0) {
+		var idx = dataset.temperature.values.length - 1;
+		var ts = new Date(dataset.temperature.values[idx].x);
+		ts = ts.toLocaleDateString("en-US", date_opts);
+		document.getElementById("date-value").innerHTML = ts 
+		document.getElementById("temperature-value").innerHTML = dataset.temperature
+			.values[idx].y + " &deg;C";
+		idx = dataset.humidity.values.length - 1;
+		document.getElementById("humidity-value").innerHTML = dataset.humidity
+			.values[idx].y + " %";
+		idx = dataset.wind.speed.length - 1;
+		const windDir = dataset.wind.direction?.[idx]?.y;
+		document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
+			" kn " + (windDir ?? "");
+	} else {
+		document.getElementById("date-value").innerHTML = "No Data.";
+		document.getElementById("temperature-value").innerHTML = "No Data.";
+		document.getElementById("humidity-value").innerHTML = "No Data.";
+		document.getElementById("wind-value").innerHTML = "No Data.";
+	}
 	document.getElementById("table-info").innerHTML = "&darr; decreasing, &#8212; stable, &uarr; increasing (based on data from the past hour)";
 
 	return config;
