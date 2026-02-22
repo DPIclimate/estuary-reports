@@ -78,9 +78,9 @@ async function createValuesTable() {
 				diff = temp_values[0] - temp_values[temp_values.length - 1];
 			}
 			if (diff > 0) {
-				trend = " &darr;";
-			} else if (diff < 0){
 				trend = " &uarr;";
+			} else if (diff < 0){
+				trend = " &darr;";
 			}
 
 			dataset.temperature.trends.push(trend);
@@ -160,9 +160,9 @@ async function createValuesTable() {
 				diff = temp_values[0] - temp_values[temp_values.length - 1];
 			}
 			if (diff > 0) {
-				trend = " &darr;";
-			} else if (diff < 0){
 				trend = " &uarr;";
+			} else if (diff < 0){
+				trend = " &darr;";
 			}
 
 			dataset.salinity.trends.push(trend);
